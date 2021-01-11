@@ -101,7 +101,7 @@ const Navbar = () => {
     {
       key: 'login',
       text: 'Přihlásit se',
-      onClick: () => instance.loginPopup(),
+      onClick: () => instance.loginPopup(loginRequest),
     },
   ];
 

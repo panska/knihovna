@@ -9,9 +9,9 @@ const verifyUser = async (idToken, permission) => {
   );
 
   const { payload } = await jwtVerify(idToken, JWKS, {
-    issuer:
+    iss:
       'https://login.microsoftonline.com/8f72dde7-cc23-4052-83eb-7ae633d83d6b/v2.0',
-    audience: '943dc092-6604-4298-8a0c-8ea5ea02291f',
+    aud: '943dc092-6604-4298-8a0c-8ea5ea02291f',
   });
 
   const { oid, email, family_name, given_name, name } = payload;
