@@ -1,0 +1,207 @@
+/* global */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.heading {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 2em;
+}
+
+form {
+  width: 397.25px !important;
+  margin-bottom: 1.5em;
+}
+
+.ms-Label::after {
+  display: inline-block;
+  padding-left: 1.5px;
+}
+
+.submit {
+  margin-top: 1em;
+  width: 100% !important;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+table {
+  margin-top: 1em;
+}
+
+th,
+td {
+  padding: 0.25em;
+}
+
+th {
+  text-align: left;
+}
+
+/* components/App.js */
+
+.body {
+  display: grid;
+  grid-template-columns: 240px auto;
+}
+
+.navigation {
+  width: 240px !important;
+  height: calc(100vh - 48px);
+  background-color: rgb(237, 235, 233) !important;
+  grid-template-columns: repeat(2, fr);
+}
+
+.credits {
+  color: #605e5c;
+  font-size: 12px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding-left: 1em;
+  padding-bottom: 1em;
+}
+
+.credits a {
+  color: #605e5c;
+}
+
+.body .router {
+  height: calc(100vh - 48px);
+  overflow-y: scroll;
+}
+
+/* components/Navbar.js */
+
+.navbar {
+  height: 48px;
+  background-color: black;
+}
+
+.navbar .container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  height: 48px;
+}
+
+.navbar .navbar-logo img {
+  height: 24px;
+  margin: 12px 0 0 0.75em;
+}
+
+.navbar ul {
+  display: flex;
+  justify-self: flex-end;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar .menu {
+  padding: 0 0.5em 0 0.5em;
+}
+
+.navbar .menu:hover {
+  cursor: pointer;
+  background-color: #0078d4;
+  -webkit-transition: background-color 250ms linear;
+  -ms-transition: background-color 250ms linear;
+  transition: background-color 250ms linear;
+}
+
+.navbar .menu .active {
+  background-color: white;
+}
+
+.ms-Callout {
+  right: 0px !important;
+}
+
+/* components/Navigation.js */
+
+.is-selected a {
+  background-color: rgb(220, 236, 249) !important;
+  color: #0078d4 !important;
+}
+
+div[name='Úvod'] a,
+div[name='Administrace'] a {
+  padding: 0 0 0 0.5em;
+}
+
+/* screens/library/Catalog */
+
+.catalog .search {
+  margin-bottom: 1em;
+  width: 480px;
+}
+
+.catalog .container {
+  margin-left: 2em;
+}
+
+.catalog .ms-DetailsHeader {
+  padding-top: 0 !important;
+}
+
+.catalog .list {
+  width: 100% !important;
+}
+
+/* screens/library/Loans */
+
+.loans .heading,
+.loans .list {
+  margin: 1em;
+  margin-left: 2em;
+}
+
+.loans .list {
+  width: 500px;
+}
+
+/* screens/library/index */
+
+.manage .heading,
+.manage.form.container {
+  margin-bottom: 0.25em;
+}
+
+.manage.form.container {
+  margin-left: 2em;
+}
+
+.manage .nav {
+  margin-left: 4em;
+}
+
+.manage.form.heading {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.manage.form.container #manage-library-add-form {
+  margin-top: 0.5em;
+}
+
+.breadcrumb {
+  margin-left: 1.5em;
+}
+
+.breadcrumb .ms-Breadcrumb-itemLink,
+.breadcrumb .ms-Breadcrumb-item {
+  font-size: 14px !important;
+  font-weight: 400;
+}
+
+.breadcrumb .ms-Link:hover {
+  background-color: transparent !important;
+}
