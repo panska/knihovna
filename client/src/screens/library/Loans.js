@@ -30,7 +30,7 @@ const Loans = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5000/api/user/${
+        `${process.env.REACT_APP_HOSTNAME}/api/user/${
           account && account.localAccountId
         }/loans`
       )

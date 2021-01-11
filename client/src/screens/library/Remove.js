@@ -46,7 +46,7 @@ const Remove = withRouter(({ history }) => {
         .then(async (res) => {
           await axios
             .post(
-              'http://localhost:5000/api/book/delete',
+              `${process.env.REACT_APP_HOSTNAME}/api/book/delete`,
               {
                 id: data.id,
               },

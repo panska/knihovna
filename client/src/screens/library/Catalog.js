@@ -75,7 +75,7 @@ const Catalog = () => {
   const [itemsCopy, setItemsCopy] = useState(items);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/book/all').then((res) => {
+    axios.get(`${process.env.REACT_APP_HOSTNAME}/api/book/all`).then((res) => {
       setColumns(columns);
       setItems({
         sortedItems: res.data,
