@@ -89,8 +89,17 @@ th {
 
 .navbar .container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: auto 1fr auto;
   height: 48px;
+}
+
+.navbar .navbar-heading h1 {
+  font-family: Segoe UI Semibold;
+  font-size: 16px !important;
+  font-weight: 600;
+  color: white;
+  display: inline-block;
+  margin: 12px 0 0 0.75em;
 }
 
 .navbar .navbar-logo img {

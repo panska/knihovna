@@ -59,9 +59,12 @@ const Navbar = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    document
-      .getElementsByClassName('ms-Persona')[0]
-      .classList.remove('root-40');
+    let classList = document.getElementsByClassName('ms-Persona')[0].classList;
+    for (let className of classList) {
+      if (className.startsWith('root')) {
+        classList.remove(className);
+      }
+    }
   });
 
   const [target, setTarget] = React.useState({ x: 0, y: 0 });
@@ -116,6 +119,9 @@ const Navbar = () => {
               src={process.env.PUBLIC_URL + '/logo.svg'}
             ></img>
           </a>
+        </div>
+        <div className='navbar-heading'>
+          <h1>Studentský portál</h1>
         </div>
         <ul className='menu'>
           <AuthenticatedTemplate>
