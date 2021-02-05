@@ -5,152 +5,41 @@ import {
   Link,
   Image,
   ImageFit,
-  DetailsList,
-  SelectionMode,
   SearchBox,
+  List,
+  FocusZone,
+  FocusZoneDirection,
+  mergeStyleSets,
+  getFocusStyle,
+  getTheme,
 } from '@fluentui/react';
 import axios from 'axios';
 
 const Catalog = () => {
-  const [columns, setColumns] = useState();
-  const [items, setItems] = useState({
-    sortedItems: [],
-    columns: [
-      {
-        key: 'cover',
-        name: 'Obálka',
-        fieldName: 'cover',
-        minWidth: 50,
-        maxWidth: 85,
-        columnActionsMode: 1,
-        isResizable: true,
-      },
-      {
-        key: 'name',
-        name: 'Název',
-        fieldName: 'name',
-        minWidth: 50,
-        maxWidth: 125,
-        columnActionsMode: 1,
-        isResizable: true,
-      },
-      {
-        key: 'author',
-        name: 'Autor',
-        fieldName: 'author',
-        minWidth: 50,
-        maxWidth: 125,
-        columnActionsMode: 1,
-        isResizable: true,
-      },
-      {
-        key: 'genre',
-        name: 'Forma, žánr',
-        fieldName: 'genre',
-        minWidth: 50,
-        maxWidth: 162.5,
-        columnActionsMode: 1,
-        isResizable: true,
-      },
-      {
-        key: 'total',
-        name: 'Celkem svazků',
-        fieldName: 'total',
-        minWidth: 50,
-        maxWidth: 97.25,
-        columnActionsMode: 1,
-        isResizable: true,
-      },
-      {
-        key: 'available',
-        name: 'K zapůjčení',
-        fieldName: 'available',
-        minWidth: 50,
-        maxWidth: 97.25,
-        columnActionsMode: 1,
-        isResizable: true,
-      },
-    ],
-  });
+  const [items, setItems] = useState([]);
   const [itemsCopy, setItemsCopy] = useState(items);
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_HOSTNAME}/api/book/all`).then((res) => {
-      setColumns(columns);
-      setItems({
-        sortedItems: res.data,
-        columns: items.columns,
+      let items = res.data.map((book) => {
+        return {
+          cover: book.coverUrl,
+          key: book.id,
+          name: book.name,
+          authorFamilyName: book.authorFamilyName,
+          authorGivenName: book.authorGivenName,
+          description: `${book.authorGivenName}, ${book.authorFamilyName}`,
+        };
       });
-      setItemsCopy({
-        sortedItems: res.data,
-        columns: items.columns,
-      });
+
+      setItems(items);
+      setItemsCopy(items);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onColumnClick = (event, column) => {
-    const { columns } = items;
-    let { sortedItems } = items;
-    let isSortedDescending = column.isSortedDescending;
-
-    if (column.isSorted) {
-      isSortedDescending = !isSortedDescending;
-    }
-
-    sortedItems = copyAndSort(
-      sortedItems,
-      column.fieldName,
-      isSortedDescending
-    );
-
-    setItems({
-      sortedItems: sortedItems,
-      columns: columns.map((col) => {
-        col.isSorted = col.key === column.key;
-        if (col.isSorted) {
-          col.isSortedDescending = isSortedDescending;
-        }
-        return col;
-      }),
-    });
-  };
-
-  function renderItemColumn(item, index, column) {
-    const fieldContent = item[column.fieldName];
-    switch (column.key) {
-      case 'cover':
-        return (
-          <Image
-            src={fieldContent}
-            width={80}
-            height={120}
-            imageFit={ImageFit.cover}
-          />
-        );
-      case 'genre':
-        return (
-          <ul>
-            {fieldContent.split(',').map((obj) => {
-              return <li>{obj}</li>;
-            })}
-          </ul>
-        );
-      default:
-        return <span>{fieldContent}</span>;
-    }
-  }
-
-  const copyAndSort = (items, key, isSortedDescending) => {
-    return items
-      .slice(0)
-      .sort((a, b) =>
-        (isSortedDescending ? a[key] < b[key] : a[key] > b[key]) ? 1 : -1
-      );
-  };
-
   const onChangeText = (ev, text) => {
-    const byName = itemsCopy.sortedItems.filter((book) =>
+    const byName = itemsCopy.filter((book) =>
       book.name
         .toLowerCase()
         .normalize('NFD')
@@ -163,8 +52,9 @@ const Catalog = () => {
         )
     );
 
-    const byAuthor = itemsCopy.sortedItems.filter((book) =>
-      book.author
+    const byAuthor = itemsCopy.filter((book) =>
+      book.authorFamilyName
+        .concat(book.authorGivenName)
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
@@ -176,11 +66,76 @@ const Catalog = () => {
         )
     );
 
-    setItems({
-      columns: itemsCopy.columns,
-      sortedItems: [...new Set([...byName, ...byAuthor])],
-    });
+    setItems([...new Set([...byName, ...byAuthor])]);
   };
+
+  const onRenderCell = (item, index, isScrolling) => {
+    return (
+      <div className={classNames.itemCell} data-is-focusable={true}>
+        <Image
+          className={classNames.itemImage}
+          src={item.cover}
+          width={40}
+          height={60}
+          imageFit={ImageFit.cover}
+        />
+        <div className={classNames.itemContent}>
+          <div className={classNames.itemName}>{item.name}</div>
+          <div className={classNames.itemIndex}>{item.description}</div>
+        </div>
+      </div>
+    );
+  };
+
+  const theme = getTheme();
+  const { palette, semanticColors, fonts } = theme;
+  const classNames = mergeStyleSets({
+    container: {
+      overflow: 'auto',
+      maxHeight: 500,
+    },
+    itemCell: [
+      getFocusStyle(theme, { inset: -1 }),
+      {
+        minHeight: 54,
+        padding: 10,
+        boxSizing: 'border-box',
+        borderBottom: `1px solid ${semanticColors.bodyDivider}`,
+        display: 'flex',
+        selectors: {
+          '&:hover': { background: palette.neutralLight },
+        },
+      },
+    ],
+    itemImage: {
+      flexShrink: 0,
+    },
+    itemContent: {
+      marginLeft: 10,
+      overflow: 'hidden',
+      flexGrow: 1,
+    },
+    itemName: [
+      fonts.xLarge,
+      {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      },
+    ],
+    itemIndex: {
+      fontSize: fonts.small.fontSize,
+      color: palette.neutralTertiary,
+      marginBottom: 10,
+    },
+    chevron: {
+      alignSelf: 'center',
+      marginLeft: 10,
+      color: palette.neutralTertiary,
+      fontSize: fonts.large.fontSize,
+      flexShrink: 0,
+    },
+  });
 
   return (
     <div className='catalog'>
@@ -204,15 +159,13 @@ const Catalog = () => {
           onChange={onChangeText}
         />
 
-        <DetailsList
-          className='list'
-          selectionMode={SelectionMode.none}
-          items={items.sortedItems}
-          setKey='set'
-          columns={items.columns}
-          onRenderItemColumn={renderItemColumn}
-          onColumnHeaderClick={onColumnClick}
-        />
+        <div className='list'>
+          <FocusZone direction={FocusZoneDirection.vertical}>
+            <div className={classNames.container} data-is-scrollable>
+              <List items={items} onRenderCell={onRenderCell} />
+            </div>
+          </FocusZone>
+        </div>
       </div>
     </div>
   );

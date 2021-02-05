@@ -47,6 +47,10 @@ th {
   text-align: left;
 }
 
+.list {
+  width: 480px;
+}
+
 /* components/App.js */
 
 .body {
@@ -157,24 +161,12 @@ div[name='Administrace'] a {
   margin-left: 2em;
 }
 
-.catalog .ms-DetailsHeader {
-  padding-top: 0 !important;
-}
-
-.catalog .list {
-  width: 100% !important;
-}
-
 /* screens/library/Loans */
 
 .loans .heading,
 .loans .list {
   margin: 1em;
   margin-left: 2em;
-}
-
-.loans .list {
-  width: 500px;
 }
 
 /* screens/library/index */

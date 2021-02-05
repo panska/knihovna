@@ -42,7 +42,7 @@ const Loans = () => {
             })
             .map((bookLoan) => {
               return {
-                cover: bookLoan.Book.cover,
+                cover: bookLoan.Book.coverUrl,
                 key: bookLoan.Book.id,
                 name: bookLoan.Book.name,
                 description: `vrátit do ${new Date(
@@ -58,7 +58,7 @@ const Loans = () => {
             })
             .map((bookLoan) => {
               return {
-                cover: bookLoan.Book.cover,
+                cover: bookLoan.Book.coverUrl,
                 key: bookLoan.Book.id,
                 name: bookLoan.Book.name,
                 description: `vypůjčeno ${new Date(
