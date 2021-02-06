@@ -1,6 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../../components/App';
-import { Breadcrumb, TextField, PrimaryButton } from '@fluentui/react';
+import {
+  Breadcrumb,
+  TextField,
+  PrimaryButton,
+  Dropdown,
+} from '@fluentui/react';
 import { useMsal, useAccount } from '@azure/msal-react';
 import { withRouter } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
@@ -13,6 +18,7 @@ const Add = withRouter(({ history }) => {
   const [state, dispatch] = useContext(Context);
   const { handleSubmit, errors, control } = useForm();
   const [book, setBook] = useState(false);
+  const [selectedOption, setSelectedOption] = useState();
 
   if (state.permissions && state.permissions.includes('SPRAVCE_KNIHOVNY')) {
     return (
@@ -93,20 +99,13 @@ const Add = withRouter(({ history }) => {
                   as={
                     <TextField
                       label='ISBN'
-                      placeholder='978-80-7287-181-0'
-                      errorMessage={
-                        errors.isbn && 'Formát ISBN kódu je nesprávný.'
-                      }
+                      placeholder='978-80-7391-816-3'
                       required
                     />
                   }
                   name='isbn'
                   control={control}
-                  rules={{
-                    required: true,
-                    // eslint-disable-next-line no-useless-escape
-                    pattern: /^(?:ISBN(?:-13)?:?\ )?(?=[0-9]{13}$|(?=(?:[0-9]+[-\ ]){4})[-\ 0-9]{17}$)97[89][-\ ]?[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9]$/,
-                  }}
+                  rules={{ required: true }}
                 />
 
                 <Controller
@@ -125,13 +124,25 @@ const Add = withRouter(({ history }) => {
                 <Controller
                   as={
                     <TextField
-                      label='Autor'
-                      placeholder='Vančura Vladislav'
-                      description='Pište formou Příjmení Jméno.'
+                      label='Příjmení autora'
+                      placeholder='Menzel'
                       required
                     />
                   }
-                  name='author'
+                  name='authorFamilyName'
+                  control={control}
+                  rules={{ required: true }}
+                />
+
+                <Controller
+                  as={
+                    <TextField
+                      label='Jméno autora'
+                      placeholder='Jiří'
+                      required
+                    />
+                  }
+                  name='authorGivenName'
                   control={control}
                   rules={{ required: true }}
                 />
@@ -141,7 +152,7 @@ const Add = withRouter(({ history }) => {
                     <TextField
                       label='Forma, žánr'
                       description='Žánry rozdělte pouze čárkami bez mezer.'
-                      placeholder='české novely,humoristické novely'
+                      placeholder='autobiografie'
                       required
                     />
                   }
@@ -154,21 +165,108 @@ const Add = withRouter(({ history }) => {
                   as={
                     <TextField
                       label='Odkaz k obálce'
-                      placeholder='https://www.obalkyknih.cz/file/cover/736212/medium'
+                      placeholder='https://www.obalkyknih.cz/file/cover/808935/medium'
                       required
                     />
                   }
-                  name='cover'
+                  name='coverUrl'
                   control={control}
                   rules={{ required: true }}
                 />
 
                 <Controller
-                  as={<TextField label='Počet svazků' required />}
-                  name='total'
-                  defaultValue='1'
+                  as={
+                    <TextField
+                      label='Anotace'
+                      placeholder='Ve vzpomínkovém vyprávění Jiří Menzel popisuje své dětství a formující kulturní zázemí pražské měšťanské rodiny, studium na FAMU a okolnosti svého rozhodnutí pro film navzdory tomu, že jeho původní láskou bylo divadlo, realizaci svých nejslavnějších snímků, jako byly Ostře sledované vlaky a Rozmarné léto v době filmové „nové vlny". Za první z nich získal Jiří Menzel Oscara a stal se jedním z „mužů roku 1968", a proto je popis následujícího období, dusných sedmdesátých let, bizarním příběhem o boji proti tuposti a neschopnosti nadřízených a stranicko-úřednického aparátu, o handlech a kompromisech. Memoáry jsou dovedeny do roku 1988, na práh obnovení svobody v Československu. Díky propojení autorova osobního a profesního života s historicko-společenskou realitou dostává čtenář do ruky také část historie české společnosti v poválečném období. Osobněji laděné vzpomínky jsou obsahem monografických podkapitol, v nichž na učitele (především na Otakara Vávru), kameramany, herce, filmové kritiky, postavy „filmové diplomacie". Nejde tu (jen) o příslovečné veselé příhody z natáčení, Jiří Menzel poskytuje zejména vhled do geneze a utváření své tvůrčí metody, svých názorů na film a přesvědčení o tom, jak se má dělat. Jako červená nit se pak celým textem táhne jednoduchá maxima: Chci dělat filmy tak, aby se líbily lidem a aby na ně lidé rádi chodili.'
+                      multiline
+                      rows={3}
+                      required
+                    />
+                  }
+                  name='annotation'
                   control={control}
-                  rules={{ required: true, pattern: /^\d+$/ }}
+                  rules={{ required: true }}
+                />
+
+                <Controller
+                  as={
+                    <TextField label='Rok vydání' placeholder='2014' required />
+                  }
+                  name='publicationYear'
+                  control={control}
+                  rules={{ required: true, valueAsNumber: true }}
+                />
+
+                <Controller
+                  as={
+                    <TextField
+                      label='Vydavatel'
+                      placeholder='Slovart'
+                      required
+                    />
+                  }
+                  name='publisher'
+                  control={control}
+                  rules={{ required: true }}
+                />
+
+                <Controller
+                  as={
+                    <TextField label='Rok zápisu' placeholder='2021' required />
+                  }
+                  name='registrationYear'
+                  control={control}
+                  rules={{ required: true, valueAsNumber: true }}
+                />
+
+                <Controller
+                  as={
+                    <TextField label='Rok odpisu' placeholder='2024' required />
+                  }
+                  name='deaccessYear'
+                  control={control}
+                  rules={{ required: true, valueAsNumber: true }}
+                />
+
+                <Controller
+                  render={({ onChange, value }) => (
+                    <Dropdown
+                      placeholder='Vyberte možnost'
+                      label='Pořízeno'
+                      selectedKey={value}
+                      // eslint-disable-next-line react/jsx-no-bind
+                      onChange={(ev, option, index) => {
+                        setSelectedOption(option.key);
+                        onChange(option.key);
+                      }}
+                      options={[
+                        {
+                          key: 'Spolek rodičů',
+                          text: 'Spolek rodičů',
+                        },
+                        {
+                          key: 'SPŠST',
+                          text: 'SPŠST',
+                        },
+                        {
+                          key: 'dar',
+                          text: 'dar',
+                        },
+                      ]}
+                      required
+                    />
+                  )}
+                  name='origin'
+                  control={control}
+                  rules={{ required: true }}
+                />
+
+                <Controller
+                  as={<TextField label='Cena' placeholder='499' required />}
+                  name='purchasePrice'
+                  control={control}
+                  rules={{ required: true, valueAsNumber: true }}
                 />
 
                 <PrimaryButton className='submit' text='Přidat' type='submit' />
@@ -197,8 +295,12 @@ const Add = withRouter(({ history }) => {
                   <td>{book.name}</td>
                 </tr>
                 <tr>
-                  <th>Autor</th>
-                  <td>{book.author}</td>
+                  <th>Příjmení autora</th>
+                  <td>{book.authorFamilyName}</td>
+                </tr>
+                <tr>
+                  <th>Jméno autora</th>
+                  <td>{book.authorGivenName}</td>
                 </tr>
                 <tr>
                   <th>Forma, žánr</th>
@@ -207,12 +309,36 @@ const Add = withRouter(({ history }) => {
                 <tr>
                   <th>Odkaz k obálce</th>
                   <td>
-                    <a href={book.cover}>{book.cover}</a>
+                    <a href={book.coverUrl}>{book.coverUrl}</a>
                   </td>
                 </tr>
                 <tr>
-                  <th>Počet svazků</th>
-                  <td>{book.total}</td>
+                  <th>Anotace</th>
+                  <td>{book.annotation}</td>
+                </tr>
+                <tr>
+                  <th>Rok vydán</th>
+                  <td>{book.publicationYear}</td>
+                </tr>
+                <tr>
+                  <th>Vydavatel</th>
+                  <td>{book.publisher}</td>
+                </tr>
+                <tr>
+                  <th>Rok zápisu</th>
+                  <td>{book.registrationYear}</td>
+                </tr>
+                <tr>
+                  <th>Rok odpisu</th>
+                  <td>{book.deaccessYear}</td>
+                </tr>
+                <tr>
+                  <th>Pořízeno</th>
+                  <td>{book.origin}</td>
+                </tr>
+                <tr>
+                  <th>Cena</th>
+                  <td>{book.purchasePrice}</td>
                 </tr>
               </table>
             </div>

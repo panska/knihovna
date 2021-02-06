@@ -35,19 +35,68 @@ router.get('/:book', async (req, res) => {
 });
 
 router.post('/create', asyncHandler(isLibraryManager), async (req, res) => {
-  let { isbn, name, author, genre, cover, total } = req.body.data;
-  if ((isbn, name, author, genre, cover, total)) {
+  let {
+    isbn,
+    name,
+    authorFamilyName,
+    authorGivenName,
+    genre,
+    coverUrl,
+    annotation,
+    publicationYear,
+    publisher,
+    registrationYear,
+    deaccessYear,
+    origin,
+    purchasePrice,
+  } = req.body.data;
+  console.log({
+    isbn,
+    name,
+    authorFamilyName,
+    authorGivenName,
+    genre,
+    coverUrl,
+    annotation,
+    publicationYear,
+    publisher,
+    registrationYear,
+    deaccessYear,
+    origin,
+    purchasePrice,
+  });
+  if (
+    (isbn,
+    name,
+    authorFamilyName,
+    authorGivenName,
+    genre,
+    coverUrl,
+    annotation,
+    publicationYear,
+    publisher,
+    registrationYear,
+    deaccessYear,
+    origin,
+    purchasePrice)
+  ) {
     Book.findOrCreate({
       where: {
         isbn,
       },
       defaults: {
         name,
-        author,
+        authorFamilyName,
+        authorGivenName,
         genre,
-        cover,
-        total,
-        available: total,
+        coverUrl,
+        annotation,
+        publicationYear,
+        publisher,
+        registrationYear,
+        deaccessYear,
+        origin,
+        purchasePrice,
       },
     }).then((book, created) => {
       console.log(created);
