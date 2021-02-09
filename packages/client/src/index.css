@@ -206,3 +206,38 @@ div[name='Administrace'] a {
 .breadcrumb .ms-Link:hover {
   background-color: transparent !important;
 }
+
+/* screens/library/book */
+
+.book.container {
+  margin: 0.5em;
+  margin-left: 2em;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.book.container img {
+  margin-top: 0.5em;
+}
+
+.book.container .info {
+  margin-left: 1em;
+}
+
+.book.container .info p {
+  padding-bottom: 0.25em;
+}
+
+.book.container .details {
+  opacity: 75%;
+}
+
+.book.container .details.annotation {
+  line-height: 1.5em;
+}
+
+.book.container .id {
+  font-size: 0.5em;
+  opacity: 75%;
+  vertical-align: super;
+}

@@ -14,6 +14,7 @@ import {
   getTheme,
   Toggle,
 } from '@fluentui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 
 const Catalog = () => {
@@ -25,13 +26,18 @@ const Catalog = () => {
     axios.get(`${process.env.REACT_APP_HOSTNAME}/api/book/all`).then((res) => {
       let items = res.data.map((book) => {
         return {
-          cover: book.coverUrl,
-          key: book.id,
+          id: book.id,
+          isbn: book.isbn,
           name: book.name,
           authorFamilyName: book.authorFamilyName,
           authorGivenName: book.authorGivenName,
+          cover: book.coverUrl,
+          genre: book.genre,
+          annotation: book.annotation,
+          publicationYear: book.publicationYear,
+          publisher: book.publisher,
+          origin: book.origin,
           graduationReading: book.graduationReading,
-          description: `${book.authorGivenName}, ${book.authorFamilyName}`,
         };
       });
 
@@ -92,7 +98,11 @@ const Catalog = () => {
 
   const onRenderCell = (item, index, isScrolling) => {
     return (
-      <div className={classNames.itemCell} data-is-focusable={true}>
+      <div
+        className={classNames.itemCell}
+        data-is-focusable={true}
+        key={item.id}
+      >
         <Image
           className={classNames.itemImage}
           src={item.cover}
@@ -101,8 +111,22 @@ const Catalog = () => {
           imageFit={ImageFit.cover}
         />
         <div className={classNames.itemContent}>
-          <div className={classNames.itemName}>{item.name}</div>
-          <div className={classNames.itemIndex}>{item.description}</div>
+          <Link
+            as={RouterLink}
+            to={{
+              pathname: '/knihovna/kniha',
+              state: {
+                source: 'catalog',
+                ...item,
+              },
+            }}
+            className={classNames.itemName}
+          >
+            {item.name}
+          </Link>
+          <div
+            className={classNames.itemIndex}
+          >{`${item.authorGivenName}, ${item.authorFamilyName}`}</div>
         </div>
       </div>
     );

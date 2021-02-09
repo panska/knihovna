@@ -16,6 +16,7 @@ import {
   Remove,
   Borrow,
   Return,
+  Book,
 } from '../screens/library';
 import Admin from '../screens/Admin';
 
@@ -58,6 +59,9 @@ function App() {
               <Switch>
                 <Route path='/knihovna/katalog'>
                   <Catalog />
+                </Route>
+                <Route path='/knihovna/kniha'>
+                  <Book />
                 </Route>
                 <Route path='/knihovna/moje-vypujcky'>
                   <Loans />

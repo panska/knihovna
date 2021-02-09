@@ -5,3 +5,4 @@ export { default as Add } from './Add';
 export { default as Remove } from './Remove';
 export { default as Borrow } from './Borrow';
 export { default as Return } from './Return';
+export { default as Book } from './Book';
