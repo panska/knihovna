@@ -19,6 +19,7 @@ import {
   useAccount,
   useIsAuthenticated,
 } from '@azure/msal-react';
+import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 
 const Loans = () => {
@@ -35,6 +36,8 @@ const Loans = () => {
         }/loans`
       )
       .then((res) => {
+        let currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
         let current = [
           res.data
             .filter((bookLoan) => {
@@ -42,12 +45,22 @@ const Loans = () => {
             })
             .map((bookLoan) => {
               return {
-                cover: bookLoan.Book.coverUrl,
-                key: bookLoan.Book.id,
+                id: bookLoan.Book.id,
+                isbn: bookLoan.Book.isbn,
                 name: bookLoan.Book.name,
-                description: `vrátit do ${new Date(
+                authorFamilyName: bookLoan.Book.authorFamilyName,
+                authorGivenName: bookLoan.Book.authorGivenName,
+                cover: bookLoan.Book.coverUrl,
+                genre: bookLoan.Book.genre,
+                annotation: bookLoan.Book.annotation,
+                publicationYear: bookLoan.Book.publicationYear,
+                publisher: bookLoan.Book.publisher,
+                origin: bookLoan.Book.origin,
+                graduationReading: bookLoan.Book.graduationReading,
+                info: `vrátit do ${new Date(
                   bookLoan.returnDate
                 ).toLocaleDateString('cs-CZ')}`,
+                lateReturn: new Date(bookLoan.returnDate) < currentDate,
               };
             }),
         ];
@@ -58,12 +71,22 @@ const Loans = () => {
             })
             .map((bookLoan) => {
               return {
-                cover: bookLoan.Book.coverUrl,
-                key: bookLoan.Book.id,
+                id: bookLoan.Book.id,
+                isbn: bookLoan.Book.isbn,
                 name: bookLoan.Book.name,
-                description: `vypůjčeno ${new Date(
+                authorFamilyName: bookLoan.Book.authorFamilyName,
+                authorGivenName: bookLoan.Book.authorGivenName,
+                cover: bookLoan.Book.coverUrl,
+                genre: bookLoan.Book.genre,
+                annotation: bookLoan.Book.annotation,
+                publicationYear: bookLoan.Book.publicationYear,
+                publisher: bookLoan.Book.publisher,
+                origin: bookLoan.Book.origin,
+                graduationReading: bookLoan.Book.graduationReading,
+                info: `vypůjčeno ${new Date(
                   bookLoan.borrowDate
                 ).toLocaleDateString('cs-CZ')}`,
+                lateReturn: false,
               };
             }),
         ];
@@ -77,7 +100,11 @@ const Loans = () => {
 
   const onRenderCell = (item, index, isScrolling) => {
     return (
-      <div className={classNames.itemCell} data-is-focusable={true}>
+      <div
+        className={classNames.itemCell}
+        data-is-focusable={true}
+        key={item.id}
+      >
         <Image
           className={classNames.itemImage}
           src={item.cover}
@@ -86,8 +113,29 @@ const Loans = () => {
           imageFit={ImageFit.cover}
         />
         <div className={classNames.itemContent}>
-          <div className={classNames.itemName}>{item.name}</div>
-          <div className={classNames.itemIndex}>{item.description}</div>
+          <div className={classNames.itemName}>
+            <Link
+              as={RouterLink}
+              to={{
+                pathname: '/knihovna/kniha',
+                state: {
+                  source: 'catalog',
+                  ...item,
+                },
+              }}
+            >
+              {item.name}
+            </Link>
+          </div>
+          <div
+            className={classNames.itemIndex}
+            style={{
+              color: item.lateReturn && '#d13438',
+              fontWeight: item.lateReturn && 700,
+            }}
+          >
+            {item.info}
+          </div>
         </div>
       </div>
     );
