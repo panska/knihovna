@@ -153,7 +153,7 @@ div[name='Administrace'] a {
 /* screens/library/Catalog */
 
 .catalog .search {
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   width: 480px;
 }
 

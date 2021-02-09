@@ -12,12 +12,14 @@ import {
   mergeStyleSets,
   getFocusStyle,
   getTheme,
+  Toggle,
 } from '@fluentui/react';
 import axios from 'axios';
 
 const Catalog = () => {
   const [items, setItems] = useState([]);
   const [itemsCopy, setItemsCopy] = useState(items);
+  const [graduationReading, setGraduationReading] = useState(false);
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_HOSTNAME}/api/book/all`).then((res) => {
@@ -28,6 +30,7 @@ const Catalog = () => {
           name: book.name,
           authorFamilyName: book.authorFamilyName,
           authorGivenName: book.authorGivenName,
+          graduationReading: book.graduationReading,
           description: `${book.authorGivenName}, ${book.authorFamilyName}`,
         };
       });
@@ -66,7 +69,25 @@ const Catalog = () => {
         )
     );
 
-    setItems([...new Set([...byName, ...byAuthor])]);
+    let filtered = new Set([...byName, ...byAuthor]);
+    if (graduationReading) {
+      filtered = [...filtered].filter(
+        (book) => book.graduationReading === true
+      );
+    }
+    setItems([...filtered]);
+  };
+
+  const graduationReadingToggle = (ev, checked) => {
+    setGraduationReading(checked);
+    if (checked) {
+      const filterGraduationReading = itemsCopy.filter(
+        (book) => book.graduationReading === true
+      );
+      setItems([...new Set([...filterGraduationReading])]);
+    } else {
+      setItems(itemsCopy);
+    }
   };
 
   const onRenderCell = (item, index, isScrolling) => {
@@ -157,6 +178,12 @@ const Catalog = () => {
           className='search'
           placeholder='Vyhledávání podle názvu nebo autora knihy'
           onChange={onChangeText}
+        />
+
+        <Toggle
+          label='Zarhnout do výsledků vyhledávání pouze literární díla k ústní maturitní zkouškce'
+          inlineLabel
+          onChange={graduationReadingToggle}
         />
 
         <div className='list'>
