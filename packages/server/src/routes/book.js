@@ -146,7 +146,7 @@ router.post('/loan', isLibraryManager, async (req, res) => {
           borrower: borrower.id,
           book: book.id,
           borrowDate: new Date(),
-          returnDate: new Date(Date.now() + 12096e5),
+          returnDate: new Date(Date.now() + 2629743830),
           returned: false,
         });
         return res.json(bookLoan);
