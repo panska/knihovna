@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, DetailsList, SelectionMode, SearchBox } from '@fluentui/react';
 import axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
+import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 
 const Loans = () => {
   const [items, setItems] = useState({
@@ -100,10 +101,15 @@ const Loans = () => {
   };
 
   function renderItemColumn(item, index, column) {
+    if (!item.Book.coverUrl) {
+      item.Book.coverUrl = resolveDefaultCover();
+    }
+
     const fieldContent = item[column.fieldName];
     let currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
     let lateReturn = new Date(item.returnDate) < currentDate;
+
     switch (column.fieldName) {
       case 'borrowDate':
       case 'returnedDate':

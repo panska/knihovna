@@ -21,6 +21,7 @@ import {
 } from '@azure/msal-react';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
+import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 
 const Borrowed = () => {
   const { instance, accounts } = useMsal();
@@ -99,6 +100,10 @@ const Borrowed = () => {
   }, [isAuthenticated]);
 
   const onRenderCell = (item, index, isScrolling) => {
+    if (!item.coverUrl) {
+      item.coverUrl = resolveDefaultCover();
+    }
+
     return (
       <div
         className={classNames.itemCell}

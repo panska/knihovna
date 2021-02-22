@@ -16,6 +16,7 @@ import {
 } from '@fluentui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
+import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 
 const Catalog = () => {
   const [items, setItems] = useState([]);
@@ -97,6 +98,10 @@ const Catalog = () => {
   };
 
   const onRenderCell = (item, index, isScrolling) => {
+    if (!item.coverUrl) {
+      item.coverUrl = resolveDefaultCover();
+    }
+
     return (
       <div
         className={classNames.itemCell}
