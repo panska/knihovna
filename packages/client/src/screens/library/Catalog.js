@@ -111,7 +111,7 @@ const Catalog = () => {
         <Image
           className={classNames.itemImage}
           src={item.coverUrl}
-          width={40}
+          width={42.5}
           height={60}
           imageFit={ImageFit.coverUrl}
         />
