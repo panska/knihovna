@@ -10,19 +10,20 @@ import Navigation from './Navigation';
 import Index from '../screens/Index';
 import {
   Catalog,
-  Loans,
+  Borrowed,
   Manage,
   Add,
   Remove,
   Borrow,
   Return,
   Book,
+  Loans,
 } from '../screens/library';
 import Admin from '../screens/Admin';
 
 const Context = createContext({ permissions: [] });
 
-function App() {
+const App = () => {
   initializeIcons();
   const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -64,7 +65,7 @@ function App() {
                   <Book />
                 </Route>
                 <Route path='/knihovna/moje-vypujcky'>
-                  <Loans />
+                  <Borrowed />
                 </Route>
                 <Route path='/knihovna/sprava/pridat-knihu'>
                   <Add />
@@ -73,7 +74,9 @@ function App() {
                 <Route path='/knihovna/sprava/odstranit-knihu'>
                   <Remove />
                 </Route>
-                <Route path='/knihovna/sprava/vypujcky'></Route>
+                <Route path='/knihovna/sprava/vypujcky'>
+                  <Loans />
+                </Route>
                 <Route path='/knihovna/sprava/vypujcit-knihu'>
                   <Borrow />
                 </Route>
@@ -97,6 +100,6 @@ function App() {
       </Context.Provider>
     </MsalProvider>
   );
-}
+};
 
 export { Context, App };

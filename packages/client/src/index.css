@@ -157,14 +157,15 @@ div[name='Administrace'] a {
   width: 480px;
 }
 
-.catalog .container {
+.catalog .container,
+.loans .container {
   margin-left: 2em;
 }
 
 /* screens/library/Loans */
 
-.loans .heading,
-.loans .list {
+.borrowed .heading,
+.borrowed .list {
   margin: 1em;
   margin-left: 2em;
 }
@@ -240,4 +241,18 @@ div[name='Administrace'] a {
   font-size: 0.5em;
   opacity: 75%;
   vertical-align: super;
+}
+
+/* screens/library/Loans */
+
+.ms-DetailsList {
+  overflow-x: hidden;
+}
+
+.loans .search {
+  width: 480px;
+}
+
+.loans .list {
+  width: 960px;
 }

@@ -31,7 +31,7 @@ const Catalog = () => {
           name: book.name,
           authorFamilyName: book.authorFamilyName,
           authorGivenName: book.authorGivenName,
-          cover: book.coverUrl,
+          coverUrl: book.coverUrl,
           genre: book.genre,
           annotation: book.annotation,
           publicationYear: book.publicationYear,
@@ -105,10 +105,10 @@ const Catalog = () => {
       >
         <Image
           className={classNames.itemImage}
-          src={item.cover}
+          src={item.coverUrl}
           width={40}
           height={60}
-          imageFit={ImageFit.cover}
+          imageFit={ImageFit.coverUrl}
         />
         <div className={classNames.itemContent}>
           <Link

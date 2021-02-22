@@ -35,11 +35,7 @@ const Manage = () => {
               </Link>
             </li>
             <li>
-              <Link
-                as={RouterLink}
-                to='/knihovna/sprava/vypujcky'
-                disabled={true}
-              >
+              <Link as={RouterLink} to='/knihovna/sprava/vypujcky'>
                 Výpůjčky
               </Link>
             </li>

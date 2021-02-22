@@ -22,7 +22,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 
-const Loans = () => {
+const Borrowed = () => {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
   const isAuthenticated = useIsAuthenticated();
@@ -50,7 +50,7 @@ const Loans = () => {
                 name: bookLoan.Book.name,
                 authorFamilyName: bookLoan.Book.authorFamilyName,
                 authorGivenName: bookLoan.Book.authorGivenName,
-                cover: bookLoan.Book.coverUrl,
+                coverUrl: bookLoan.Book.coverUrl,
                 genre: bookLoan.Book.genre,
                 annotation: bookLoan.Book.annotation,
                 publicationYear: bookLoan.Book.publicationYear,
@@ -76,7 +76,7 @@ const Loans = () => {
                 name: bookLoan.Book.name,
                 authorFamilyName: bookLoan.Book.authorFamilyName,
                 authorGivenName: bookLoan.Book.authorGivenName,
-                cover: bookLoan.Book.coverUrl,
+                coverUrl: bookLoan.Book.coverUrl,
                 genre: bookLoan.Book.genre,
                 annotation: bookLoan.Book.annotation,
                 publicationYear: bookLoan.Book.publicationYear,
@@ -107,10 +107,10 @@ const Loans = () => {
       >
         <Image
           className={classNames.itemImage}
-          src={item.cover}
+          src={item.coverUrl}
           width={40}
           height={60}
-          imageFit={ImageFit.cover}
+          imageFit={ImageFit.coverUrl}
         />
         <div className={classNames.itemContent}>
           <div className={classNames.itemName}>
@@ -192,7 +192,7 @@ const Loans = () => {
   });
 
   return (
-    <div className='loans'>
+    <div className='borrowed'>
       <AuthenticatedTemplate>
         <MessageBar messageBarType={MessageBarType.warning} isMultiline={false}>
           Knihovna je v této době v omezeném provozu.
@@ -238,4 +238,4 @@ const Loans = () => {
   );
 };
 
-export default Loans;
+export default Borrowed;

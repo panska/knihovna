@@ -212,4 +212,20 @@ router.post('/return', async (req, res) => {
   }
 });
 
+router.get('/loan/all', async (req, res) => {
+  let bookLoans = await BookLoan.findAll({
+    include: [
+      {
+        model: User,
+        as: User.id,
+      },
+      {
+        model: Book,
+        as: Book.id,
+      },
+    ],
+  });
+  return res.json(bookLoans);
+});
+
 module.exports = router;

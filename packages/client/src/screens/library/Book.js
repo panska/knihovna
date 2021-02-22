@@ -11,7 +11,7 @@ const Book = withRouter(({ history }) => {
     name,
     authorFamilyName,
     authorGivenName,
-    cover,
+    coverUrl,
     genre,
     annotation,
     publicationYear,
@@ -48,7 +48,7 @@ const Book = withRouter(({ history }) => {
       />
 
       <div className='book container'>
-        <img src={cover} alt='Knižní obálka' />
+        <img src={coverUrl} alt='Knižní obálka' />
         <div className='info'>
           <h1>
             {name} <span className='id'>({id})</span>
