@@ -7,20 +7,17 @@
     "dialect": "postgres",
     "timezone": "+02:00"
   },
-  "test": {
-    "username": "postgres",
-    "password": "admin",
-    "database": "panska",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "timezone": "+02:00"
-  },
   "production": {
-    "username": "postgres",
-    "password": "admin",
-    "database": "panska",
-    "host": "127.0.0.1",
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
     "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
     "timezone": "+02:00"
   }
 }
