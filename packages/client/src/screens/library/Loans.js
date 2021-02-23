@@ -58,18 +58,16 @@ const Loans = () => {
   const [itemsCopy, setItemsCopy] = useState(items);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_HOSTNAME}/api/book/loan/all`)
-      .then((res) => {
-        setItems({
-          sortedItems: res.data,
-          columns: items.columns,
-        });
-        setItemsCopy({
-          sortedItems: res.data,
-          columns: items.columns,
-        });
+    axios.get('/api/book/loan/all').then((res) => {
+      setItems({
+        sortedItems: res.data,
+        columns: items.columns,
       });
+      setItemsCopy({
+        sortedItems: res.data,
+        columns: items.columns,
+      });
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

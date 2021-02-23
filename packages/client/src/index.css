@@ -230,7 +230,7 @@ div[name='Administrace'] a {
 }
 
 .book.container .details {
-  opacity: 75%;
+  opacity: 0.75;
 }
 
 .book.container .details.annotation {
@@ -239,7 +239,7 @@ div[name='Administrace'] a {
 
 .book.container .id {
   font-size: 0.5em;
-  opacity: 75%;
+  opacity: 0.75;
   vertical-align: super;
 }
 

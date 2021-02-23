@@ -60,7 +60,7 @@ const Return = withRouter(({ history }) => {
                       .then(async (res) => {
                         await axios
                           .post(
-                            `${process.env.REACT_APP_HOSTNAME}/api/book/return`,
+                            '/api/book/return',
                             {
                               borrowerEmail: data.email,
                               bookId: data.id,

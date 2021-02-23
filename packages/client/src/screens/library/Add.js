@@ -74,7 +74,7 @@ const Add = withRouter(({ history }) => {
                       .then(async (res) => {
                         await axios
                           .post(
-                            `${process.env.REACT_APP_HOSTNAME}/api/book/create`,
+                            '/api/book/create',
                             {
                               data,
                             },

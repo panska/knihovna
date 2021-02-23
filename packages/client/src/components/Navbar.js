@@ -36,7 +36,7 @@ const Navbar = () => {
         })
         .then((res) => {
           axios
-            .get(`${process.env.REACT_APP_HOSTNAME}/api/user/permissions`, {
+            .get('/api/user/permissions', {
               headers: {
                 Authorization: res.idToken,
               },

@@ -1,7 +1,6 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const express = require('express');
-var cors = require('cors');
 const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
 
@@ -13,16 +12,18 @@ db.sequelize
 
 const app = express();
 
-app.use(express.static(path.resolve(__dirname, '../public')));
-
-app.use(cors());
+app.use(express.static(path.resolve(__dirname, '../../client/build')));
 
 app.use(bodyParser.json());
 
-var bookRoute = require('./routes/book');
+const bookRoute = require('./routes/book');
 app.use('/api/book', bookRoute);
-var userRoute = require('./routes/user');
+const userRoute = require('./routes/user');
 app.use('/api/user', userRoute);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../client/build/index.html'));
+});
 
 const SERVER_PORT = process.env.PORT;
 app.listen(SERVER_PORT, () => console.log(`LISTENING ON PORT ${SERVER_PORT}!`));

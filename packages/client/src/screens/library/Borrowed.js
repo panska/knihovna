@@ -31,11 +31,7 @@ const Borrowed = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${process.env.REACT_APP_HOSTNAME}/api/user/${
-          account && account.localAccountId
-        }/loans`
-      )
+      .get(`/api/user/${account && account.localAccountId}/loans`)
       .then((res) => {
         let currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);

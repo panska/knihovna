@@ -24,7 +24,7 @@ const Catalog = () => {
   const [graduationReading, setGraduationReading] = useState(false);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_HOSTNAME}/api/book/all`).then((res) => {
+    axios.get('/api/book/all').then((res) => {
       let items = res.data.map((book) => {
         return {
           id: book.id,
