@@ -158,7 +158,10 @@ const Add = withRouter(({ history }) => {
                   }
                   name='genre'
                   control={control}
-                  rules={{ required: true, pattern: /[^,\s?]+/ }}
+                  rules={{
+                    required: true,
+                    pattern: /[^,\s?]+/,
+                  }}
                 />
 
                 <Controller
@@ -195,7 +198,10 @@ const Add = withRouter(({ history }) => {
                   }
                   name='publicationYear'
                   control={control}
-                  rules={{ required: true, valueAsNumber: true }}
+                  rules={{
+                    required: true,
+                    valueAsNumber: true,
+                  }}
                 />
 
                 <Controller
@@ -217,7 +223,10 @@ const Add = withRouter(({ history }) => {
                   }
                   name='registrationYear'
                   control={control}
-                  rules={{ required: true, valueAsNumber: true }}
+                  rules={{
+                    required: true,
+                    valueAsNumber: true,
+                  }}
                 />
 
                 <Controller
@@ -226,7 +235,10 @@ const Add = withRouter(({ history }) => {
                   }
                   name='deaccessYear'
                   control={control}
-                  rules={{ required: true, valueAsNumber: true }}
+                  rules={{
+                    required: true,
+                    valueAsNumber: true,
+                  }}
                 />
 
                 <Controller
@@ -266,7 +278,10 @@ const Add = withRouter(({ history }) => {
                   as={<TextField label='Cena' placeholder='499' required />}
                   name='purchasePrice'
                   control={control}
-                  rules={{ required: true, valueAsNumber: true }}
+                  rules={{
+                    required: true,
+                    valueAsNumber: true,
+                  }}
                 />
 
                 <PrimaryButton className='submit' text='Přidat' type='submit' />

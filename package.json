@@ -7,10 +7,17 @@
     "scripts": {
         "client": "yarn workspace client start",
         "server": "yarn workspace server start",
-        "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\""
+        "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
+        "format": "prettier --write ."
     },
-    "workspaces": ["packages/server", "packages/client"],
+    "workspaces": [
+        "packages/server",
+        "packages/client"
+    ],
     "dependencies": {
         "concurrently": "5.3.0"
+    },
+    "devDependencies": {
+        "prettier": "^2.2.1"
     }
 }
