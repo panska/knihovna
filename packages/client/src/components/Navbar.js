@@ -36,7 +36,7 @@ const Navbar = () => {
         })
         .then((res) => {
           axios
-            .get('/api/user/permissions', {
+            .get('/api/user/login', {
               headers: {
                 Authorization: res.idToken,
               },

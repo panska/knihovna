@@ -1,13 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const { verifyUser, isAdmin } = require('../utils/auth');
+const { loginUser, checkPermissions, isAdmin } = require('../utils/auth');
 const { User, Book, BookLoan } = require('../models/');
 const asyncHandler = require('express-async-handler');
 
 router.get(
+  '/login',
+  asyncHandler(async (req, res) => {
+    const permissions = await loginUser(req.headers.authorization);
+    return res.json(permissions);
+  })
+);
+
+router.get(
   '/permissions',
   asyncHandler(async (req, res) => {
-    const permissions = await verifyUser(req.headers.authorization);
+    const permissions = await checkPermissions(req.headers.authorization);
     return res.json(permissions);
   })
 );

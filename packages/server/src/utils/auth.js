@@ -3,18 +3,50 @@ const { User } = require('./../models/');
 const { default: createRemoteJWKSet } = require('jose/jwks/remote');
 const { default: jwtVerify } = require('jose/jwt/verify');
 
-const verifyUser = async (idToken, permission) => {
+const verifyToken = async (token) => {
   const JWKS = createRemoteJWKSet(
     new URL('https://login.microsoftonline.com/common/discovery/v2.0/keys')
   );
 
-  const { payload } = await jwtVerify(idToken, JWKS, {
+  const { payload } = await jwtVerify(token, JWKS, {
     iss:
       'https://login.microsoftonline.com/8f72dde7-cc23-4052-83eb-7ae633d83d6b/v2.0',
     aud: '943dc092-6604-4298-8a0c-8ea5ea02291f',
   });
 
-  const { oid, email, family_name, given_name, name } = payload;
+  return payload;
+};
+
+const loginUser = async (idToken) => {
+  const { oid, email, family_name, given_name, name } = await verifyToken(
+    idToken
+  );
+
+  let user = (
+    await User.findOrCreate({
+      where: {
+        oid,
+      },
+      defaults: {
+        email,
+        familyName: family_name,
+        givenName: given_name,
+        displayName: name,
+      },
+    })
+  )[0];
+
+  if (user.permissions) {
+    return user.permissions;
+  } else {
+    return [];
+  }
+};
+
+const checkPermissions = async (idToken, permission) => {
+  const { oid, email, family_name, given_name, name } = await verifyToken(
+    idToken
+  );
 
   const user = await User.findOne({
     where: {
@@ -60,7 +92,8 @@ const isAdmin = asyncHandler(async (req, res, next) => {
 });
 
 module.exports = {
-  verifyUser: verifyUser,
+  loginUser: loginUser,
+  checkPermissions: checkPermissions,
   isLibraryManager: isLibraryManager,
   isAdmin: isAdmin,
 };
