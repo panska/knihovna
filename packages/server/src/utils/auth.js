@@ -72,7 +72,7 @@ const checkPermissions = async (idToken, permission) => {
 };
 
 const isLibraryManager = asyncHandler(async (req, res, next) => {
-  if (await verifyUser(req.headers.authorization, 'SPRAVCE_KNIHOVNY')) {
+  if (await checkPermissions(req.headers.authorization, 'SPRAVCE_KNIHOVNY')) {
     return next();
   } else {
     let err = new Error('Unauthorized');
@@ -82,7 +82,7 @@ const isLibraryManager = asyncHandler(async (req, res, next) => {
 });
 
 const isAdmin = asyncHandler(async (req, res, next) => {
-  if (await verifyUser(req.headers.authorization, 'ADMIN')) {
+  if (await checkPermissions(req.headers.authorization, 'ADMIN')) {
     return next();
   } else {
     let err = new Error('Unauthorized');

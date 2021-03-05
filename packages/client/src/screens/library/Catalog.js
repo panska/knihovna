@@ -28,13 +28,17 @@ const Catalog = () => {
       let items = res.data.map((book) => {
         return {
           id: book.id,
+          inventoryNumber: book.inventoryNumber,
           isbn: book.isbn,
+          cnb: book.cnb,
           name: book.name,
           authorFamilyName: book.authorFamilyName,
           authorGivenName: book.authorGivenName,
+          pages: book.pages,
           coverUrl: book.coverUrl,
           genre: book.genre,
           annotation: book.annotation,
+          resume: book.resume,
           publicationYear: book.publicationYear,
           publisher: book.publisher,
           origin: book.origin,
@@ -49,32 +53,40 @@ const Catalog = () => {
   }, []);
 
   const onChangeText = (ev, text) => {
-    const byName = itemsCopy.filter((book) =>
-      book.name
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .includes(
-          text
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-        )
-    );
+    const byName = itemsCopy.filter((book) => {
+      if (book.name) {
+        return book.name
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .includes(
+            text
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+          );
+      } else {
+        return false;
+      }
+    });
 
-    const byAuthor = itemsCopy.filter((book) =>
-      book.authorFamilyName
-        .concat(book.authorGivenName)
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .includes(
-          text
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-        )
-    );
+    const byAuthor = itemsCopy.filter((book) => {
+      if (book.authorFamilyName && book.authorGivenName) {
+        return book.authorFamilyName
+          .concat(book.authorGivenName)
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .includes(
+            text
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+          );
+      } else {
+        return false;
+      }
+    });
 
     let filtered = new Set([...byName, ...byAuthor]);
     if (graduationReading) {

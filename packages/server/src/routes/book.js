@@ -6,7 +6,13 @@ const { Op } = require('sequelize');
 const asyncHandler = require('express-async-handler');
 
 router.get('/all', async (req, res) => {
-  let books = await Book.findAll();
+  let books = await Book.findAll({
+    where: {
+      deaccessYear: {
+        [Op.eq]: null,
+      },
+    },
+  });
   return res.json(books);
 });
 

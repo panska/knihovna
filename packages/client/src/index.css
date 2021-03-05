@@ -49,6 +49,15 @@ th {
 
 .list {
   width: 480px;
+  scrollbar-color: transparent transparent;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.list::-moz-scrollbar {
+  display: none;
 }
 
 /* components/App.js */
@@ -151,6 +160,15 @@ div[name='Administrace'] a {
 }
 
 /* screens/library/Catalog */
+
+.catalog {
+  overflow: hidden;
+  height: 90vh;
+}
+
+.catalog .list {
+  width: 100%;
+}
 
 .catalog .search {
   margin-bottom: 0.5em;
