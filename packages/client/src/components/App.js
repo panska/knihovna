@@ -52,10 +52,6 @@ const App = () => {
           <Router>
             <div className='navigation'>
               <Navigation />
-              <div className='credits'>
-                <p>Kovačević Marko © 2021</p>
-                <a href='https://github.com/kvcvc'>gtihub.com/kvcvc</a>
-              </div>
             </div>
             <div className='router'>
               <Switch>
