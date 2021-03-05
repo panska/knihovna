@@ -66,7 +66,7 @@ const Manage = () => {
     return (
       <div>
         <div className='heading'>
-          <h1>Přístup zakázán.</h1>
+          <h1>Přístup zakázán</h1>
         </div>
       </div>
     );

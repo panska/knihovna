@@ -158,7 +158,7 @@ const Remove = withRouter(({ history }) => {
     return (
       <>
         <div className='heading'>
-          <h1>Přístup zakázán.</h1>
+          <h1>Přístup zakázán</h1>
         </div>
       </>
     );

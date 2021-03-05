@@ -159,7 +159,13 @@ div[name='Administrace'] a {
   padding: 0 0 0 0.5em;
 }
 
-/* screens/library/Catalog */
+/* screens/404.js */
+
+._404 {
+  margin: 1em 0 0 2em;
+}
+
+/* screens/library/Catalog.js */
 
 .catalog {
   overflow: hidden;
@@ -180,7 +186,7 @@ div[name='Administrace'] a {
   margin-left: 2em;
 }
 
-/* screens/library/Loans */
+/* screens/library/Loans.js */
 
 .borrowed .heading,
 .borrowed .list {
@@ -226,7 +232,7 @@ div[name='Administrace'] a {
   background-color: transparent !important;
 }
 
-/* screens/library/book */
+/* screens/library/Book.js */
 
 .book.container {
   margin: 0.5em;
@@ -270,7 +276,7 @@ div[name='Administrace'] a {
   padding-left: 2em;
 }
 
-/* screens/library/Loans */
+/* screens/library/Loans.js */
 
 .ms-DetailsList {
   overflow-x: hidden;

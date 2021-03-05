@@ -231,7 +231,7 @@ const Borrowed = () => {
       <UnauthenticatedTemplate>
         <div>
           <div className='manage form container'>
-            <h1>Přístup zakázán.</h1>
+            <h1>Přístup zakázán</h1>
           </div>
         </div>
       </UnauthenticatedTemplate>

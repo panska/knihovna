@@ -20,6 +20,7 @@ import {
   Loans,
 } from '../screens/library';
 import Admin from '../screens/Admin';
+import _404 from '../screens/404';
 
 const Context = createContext({ permissions: [] });
 
@@ -90,8 +91,11 @@ const App = () => {
                 <Route path='/administrace'>
                   <Admin />
                 </Route>
-                <Route path='/'>
+                <Route exact path='/'>
                   <Index />
+                </Route>
+                <Route path='*'>
+                  <_404 />
                 </Route>
               </Switch>
             </div>
