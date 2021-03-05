@@ -217,30 +217,39 @@ div[name='Administrace'] a {
   grid-template-columns: auto 1fr;
 }
 
-.book.container img {
+.book img {
   margin-top: 0.5em;
 }
 
-.book.container .info {
+.book .info {
   margin-left: 1em;
 }
 
-.book.container .info p {
+.book .info p {
   padding-bottom: 0.25em;
 }
-
-.book.container .details {
-  opacity: 0.75;
-}
-
-.book.container .details.annotation {
+.book .detail.annotation {
   line-height: 1.5em;
 }
 
-.book.container .id {
-  font-size: 0.5em;
+.book table {
+  margin-top: 0.25em;
+  border: 0;
+}
+
+.book table,
+.book th,
+.book td {
+  border: 0;
+}
+
+.book th {
   opacity: 0.75;
-  vertical-align: super;
+  font-weight: 400;
+}
+
+.book td {
+  padding-left: 2em;
 }
 
 /* screens/library/Loans */

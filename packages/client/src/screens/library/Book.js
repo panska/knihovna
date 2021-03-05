@@ -1,24 +1,54 @@
-import React, { useState } from 'react';
-import { TextField, PrimaryButton, Breadcrumb } from '@fluentui/react';
+import React from 'react';
+import { Breadcrumb } from '@fluentui/react';
 import { withRouter, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import ShowMoreText from 'react-show-more-text';
 
 const Book = withRouter(({ history }) => {
   const {
     source,
     id,
+    inventoryNumber,
     isbn,
+    cnb,
     name,
-    authorFamilyName,
     authorGivenName,
+    authorFamilyName,
+    pages,
     coverUrl,
     genre,
     annotation,
+    resume,
     publicationYear,
     publisher,
+    registrationYear,
     origin,
+    purchasePrice,
+    deaccessYear,
     graduationReading,
   } = useLocation().state;
+
+  console.log({
+    source,
+    id,
+    inventoryNumber,
+    isbn,
+    cnb,
+    name,
+    authorGivenName,
+    authorFamilyName,
+    pages,
+    coverUrl,
+    genre,
+    annotation,
+    resume,
+    publicationYear,
+    publisher,
+    registrationYear,
+    origin,
+    purchasePrice,
+    deaccessYear,
+    graduationReading,
+  });
 
   return (
     <>
@@ -50,30 +80,101 @@ const Book = withRouter(({ history }) => {
       <div className='book container'>
         <img src={coverUrl} alt='Knižní obálka' />
         <div className='info'>
-          <h1>
-            {name} <span className='id'>({id})</span>
-          </h1>
-          <p>
-            Autor:{' '}
-            <span className='details'>
-              {authorFamilyName}, {authorGivenName}
-            </span>
-          </p>
-          <p>
-            Anotace: <span className='details annotation'>{annotation}</span>
-          </p>
-          <p>
-            Žánr: <span className='details'>{genre}</span>
-          </p>
-          <p>
-            Rok vydání: <span className='details'>{publicationYear}</span>
-          </p>
-          <p>
-            Vydavatel: <span className='details'>{publisher}</span>
-          </p>
-          <p>
-            ISBN: <span className='details'>{isbn}</span>
-          </p>
+          <h1>{name}</h1>
+          <ShowMoreText
+            lines={3}
+            more='...celý text'
+            less='...zkrácený text'
+            expanded={false}
+            width={525}
+          >
+            {annotation ? annotation : resume && resume}
+          </ShowMoreText>
+          <div className='details'>
+            <table>
+              <tbody>
+                {authorFamilyName && authorGivenName ? (
+                  <tr>
+                    <th>Autor</th>
+                    <td>
+                      {authorFamilyName}, {authorGivenName}
+                    </td>
+                  </tr>
+                ) : authorFamilyName ? (
+                  <tr>
+                    <th>Autor</th>
+                    <td>{authorFamilyName}</td>
+                  </tr>
+                ) : authorGivenName ? (
+                  <tr>
+                    <th>Autor</th>
+                    <td>{authorGivenName}</td>
+                  </tr>
+                ) : undefined}
+
+                {publicationYear && publisher ? (
+                  <tr>
+                    <th>Vydáno</th>
+                    <td>
+                      {publicationYear}, {publisher}
+                    </td>
+                  </tr>
+                ) : publicationYear ? (
+                  <tr>
+                    <th>Vydáno</th>
+                    <td>{publicationYear}</td>
+                  </tr>
+                ) : publisher ? (
+                  <tr>
+                    <th>Vydáno</th>
+                    <td>{publisher}</td>
+                  </tr>
+                ) : undefined}
+
+                {genre && (
+                  <tr>
+                    <th>Forma, žánr</th>
+                    <td>{genre}</td>
+                  </tr>
+                )}
+
+                {pages && (
+                  <tr>
+                    <th>Počet stran</th>
+                    <td>{pages}</td>
+                  </tr>
+                )}
+
+                {isbn ? (
+                  <tr>
+                    <th>ISBN</th>
+                    <td>{isbn}</td>
+                  </tr>
+                ) : (
+                  cnb && (
+                    <tr>
+                      <th>Číslo nár.bibl.</th>
+                      <td>{cnb}</td>
+                    </tr>
+                  )
+                )}
+
+                {inventoryNumber && (
+                  <tr>
+                    <th>Inventární číslo</th>
+                    <td>{inventoryNumber}</td>
+                  </tr>
+                )}
+
+                {id && (
+                  <tr>
+                    <th>Systémové číslo</th>
+                    <td>{id}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </>
