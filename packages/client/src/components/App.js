@@ -18,6 +18,7 @@ import {
   Return,
   Book,
   Loans,
+  Export,
 } from '../screens/library';
 import Admin from '../screens/Admin';
 import _404 from '../screens/404';
@@ -80,6 +81,9 @@ const App = () => {
                 <Route path='/knihovna/sprava/prodlouzit-vypujcku'></Route>
                 <Route path='/knihovna/sprava/vratit-knihu'>
                   <Return />
+                </Route>
+                <Route path='/knihovna/sprava/export-databaze'>
+                  <Export />
                 </Route>
                 <Route path='/knihovna/sprava'>
                   <Manage />

@@ -58,6 +58,11 @@ const Manage = () => {
                 Vrátit knihu
               </Link>
             </li>
+            <li>
+              <Link as={RouterLink} to='/knihovna/sprava/export-databaze'>
+                Export databáze
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
