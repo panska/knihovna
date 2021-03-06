@@ -138,7 +138,10 @@ const Loans = () => {
             to={{
               pathname: '/knihovna/kniha',
               state: {
-                source: 'catalog',
+                source: {
+                  text: 'Výpůjčky',
+                  pathname: '/knihovna/sprava/vypujcky',
+                },
                 ...item.Book,
               },
             }}

@@ -120,7 +120,10 @@ const Borrowed = () => {
               to={{
                 pathname: '/knihovna/kniha',
                 state: {
-                  source: 'catalog',
+                  source: {
+                    text: 'Moje výpůjčky',
+                    pathname: '/knihovna/moje-vypujcky',
+                  },
                   ...item,
                 },
               }}

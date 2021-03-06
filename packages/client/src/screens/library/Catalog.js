@@ -133,7 +133,10 @@ const Catalog = () => {
             to={{
               pathname: '/knihovna/kniha',
               state: {
-                source: 'catalog',
+                source: {
+                  text: 'Katalog',
+                  pathname: '/knihovna/katalog',
+                },
                 ...item,
               },
             }}

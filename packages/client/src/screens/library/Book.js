@@ -27,29 +27,6 @@ const Book = withRouter(({ history }) => {
     graduationReading,
   } = useLocation().state;
 
-  console.log({
-    source,
-    id,
-    inventoryNumber,
-    isbn,
-    cnb,
-    name,
-    authorGivenName,
-    authorFamilyName,
-    pages,
-    coverUrl,
-    genre,
-    annotation,
-    resume,
-    publicationYear,
-    publisher,
-    registrationYear,
-    origin,
-    purchasePrice,
-    deaccessYear,
-    graduationReading,
-  });
-
   return (
     <>
       <Breadcrumb
@@ -61,9 +38,9 @@ const Book = withRouter(({ history }) => {
             as: 'p',
           },
           {
-            text: 'Katalog',
+            text: source.text,
             key: 'f2',
-            pathname: '/knihovna/katalog',
+            pathname: source.pathname,
             onClick: (event, item) => {
               event.preventDefault();
               history.push(item.pathname);
