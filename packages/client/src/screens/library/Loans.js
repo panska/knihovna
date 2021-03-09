@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Link, DetailsList, SelectionMode, SearchBox } from '@fluentui/react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Context } from '../../components/App';
+import {
+  Link,
+  DetailsList,
+  SelectionMode,
+  SearchBox,
+  Breadcrumb,
+} from '@fluentui/react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 import Title from '../../components/Title';
 
-const Loans = () => {
+const Loans = withRouter(({ history }) => {
+  const [state, dispatch] = useContext(Context);
   const [items, setItems] = useState({
     sortedItems: [],
     columns: [
@@ -200,33 +209,71 @@ const Loans = () => {
     });
   };
 
-  return (
-    <div className='loans'>
-      <Title text='Výpůjčky' />
-      <div className='heading'>
-        <h1>Výpůjčky</h1>
-      </div>
-      <div className='container'>
-        <SearchBox
-          className='search'
-          placeholder='Vyhledávání podle názvu knihy nebo uživatelského jména čtenáře'
-          onChange={onChangeText}
+  if (state.permissions && state.permissions.includes('SPRAVCE_KNIHOVNY')) {
+    return (
+      <>
+        <Title text='Výpůjčky' />
+        <Breadcrumb
+          className='breadcrumb'
+          items={[
+            {
+              text: 'Knihovna',
+              key: 'f1',
+              as: 'p',
+            },
+            {
+              text: 'Správa',
+              key: 'f2',
+              pathname: '/knihovna/sprava',
+              onClick: (event, item) => {
+                event.preventDefault();
+                history.push(item.pathname);
+              },
+            },
+            {
+              text: 'Výpůjčky',
+              key: 'f3',
+              as: 'p',
+            },
+          ]}
         />
-        <DetailsList
-          className='list'
-          selectionMode={SelectionMode.none}
-          items={items.sortedItems}
-          setKey='set'
-          columns={items.columns}
-          onRenderItemColumn={renderItemColumn}
-          onColumnHeaderClick={onColumnClick}
-          style={{
-            overflowX: 'hidden',
-          }}
-        />
+
+        <div className='loans'>
+          <div className='manage form heading'>
+            <h1>Výpůjčky</h1>
+          </div>
+          <div className='container'>
+            <SearchBox
+              className='search'
+              placeholder='Vyhledávání podle názvu knihy nebo uživatelského jména čtenáře'
+              onChange={onChangeText}
+            />
+            <DetailsList
+              className='list'
+              selectionMode={SelectionMode.none}
+              items={items.sortedItems}
+              setKey='set'
+              columns={items.columns}
+              onRenderItemColumn={renderItemColumn}
+              onColumnHeaderClick={onColumnClick}
+              style={{
+                overflowX: 'hidden',
+              }}
+            />
+          </div>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <div>
+        <Title text='Přístup zakázán' />
+        <div className='heading'>
+          <h1>Přístup zakázán</h1>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+});
 
 export default Loans;

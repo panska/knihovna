@@ -269,6 +269,7 @@ div[name='Administrace'] a {
 }
 
 .loans .search {
+  margin-top: 1em;
   width: 480px;
 }
 
