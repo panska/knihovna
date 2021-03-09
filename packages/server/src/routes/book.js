@@ -4,6 +4,7 @@ const { isLibraryManager } = require('../utils/auth');
 const { User, Book, BookLoan } = require('../models/');
 const { Op } = require('sequelize');
 const asyncHandler = require('express-async-handler');
+const nodemailer = require('nodemailer');
 
 router.get('/all', async (req, res) => {
   let books = [];
@@ -153,14 +154,37 @@ router.post('/loan', isLibraryManager, async (req, res) => {
       });
 
       if (book) {
-        const bookLoan = await BookLoan.create({
+        BookLoan.create({
           borrower: borrower.id,
           book: book.id,
           borrowDate: new Date(),
           returnDate: new Date(Date.now() + 2629743830),
           returned: false,
+        }).then(async (bookLoan) => {
+          let transporter = nodemailer.createTransport({
+            pool: true,
+            host: process.env.SMTP_HOST,
+            port: process.env.SMTP_PORT,
+            secure: false,
+            auth: {
+              user: process.env.SMTP_EMAIL,
+              pass: process.env.SMTP_PASSWORD,
+            },
+          });
+
+          await transporter.sendMail({
+            from: 'Studentský portál​ <20GKovacevicM@student.panska.cz>',
+            to: borrowerEmail,
+            subject: `Výpůjčka č. ${bookLoan.id}`,
+            text: `Tento email slouží jako potvrzení o úspěšné výpůjčce z školní knihovny. Přehled svých výpůjček můžete po přihlášení najít i na portal.panska.cz.\n\n${
+              (await Book.findOne({ where: { id: bookLoan.book } })).name
+            }, půjčené do ${bookLoan.returnDate.toLocaleDateString(
+              'cs-CZ'
+            )}\n\nToto je automaticky generovaný e-mail.\nV případě jakýchkoliv dotazů se obracejte na vedoucí školní knihovny Mgr. Honců Hana.`,
+          });
+
+          return res.json(bookLoan);
         });
-        return res.json(bookLoan);
       } else {
         return res.status(400).json({
           error: 'INVALID_BOOK_ID',

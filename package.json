@@ -7,12 +7,14 @@
     "scripts": {
         "client": "yarn workspace client start",
         "server": "yarn workspace server start",
-        "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
+        "jobs": "yarn workspace jobs start",
+        "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\" \"yarn jobs\"",
         "format": "prettier --write ."
     },
     "workspaces": [
+        "packages/client",
         "packages/server",
-        "packages/client"
+        "packages/jobs"
     ],
     "dependencies": {
         "concurrently": "5.3.0"
