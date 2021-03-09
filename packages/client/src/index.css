@@ -168,7 +168,8 @@ div[name='Administrace'] a {
 }
 
 .catalog .container,
-.loans .container {
+.loans .container,
+.index .container {
   margin-left: 2em;
 }
 
@@ -275,4 +276,39 @@ div[name='Administrace'] a {
 
 .loans .list {
   width: 960px;
+}
+
+/* screens/Index.js */
+
+.index .books {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5em;
+}
+
+.index .book {
+  width: 127.5px;
+  float: left;
+  display: block;
+  overflow: hidden;
+}
+
+.index .book:hover {
+  cursor: pointer;
+}
+
+.index .book h1 {
+  color: rgb(0, 120, 212);
+  margin-top: 0.5em;
+  font-weight: 400;
+  font-size: 1em;
+}
+
+.index .book h1:hover {
+  text-decoration: underline;
+}
+
+.index .book .author {
+  font-size: 0.75em;
+  opacity: 0.75;
 }

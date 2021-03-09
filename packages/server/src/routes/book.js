@@ -22,6 +22,19 @@ router.get('/all', async (req, res) => {
   return res.json(books);
 });
 
+router.get('/new', async (req, res) => {
+  books = await Book.findAll({
+    limit: 6,
+    where: {
+      deaccessYear: {
+        [Op.eq]: null,
+      },
+    },
+    order: [['createdAt', 'DESC']],
+  });
+  return res.json(books);
+});
+
 router.get('/:book', async (req, res) => {
   if (
     req.params.book &&
