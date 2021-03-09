@@ -97,10 +97,6 @@ const Borrowed = () => {
   }, [isAuthenticated]);
 
   const onRenderCell = (item, index, isScrolling) => {
-    if (!item.coverUrl) {
-      item.coverUrl = resolveDefaultCover();
-    }
-
     return (
       <div
         className={classNames.itemCell}
@@ -109,7 +105,7 @@ const Borrowed = () => {
       >
         <Image
           className={classNames.itemImage}
-          src={item.coverUrl}
+          src={item.coverUrl ? item.coverUrl : resolveDefaultCover()}
           width={42.5}
           height={60}
           imageFit={ImageFit.coverUrl}

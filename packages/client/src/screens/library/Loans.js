@@ -109,10 +109,6 @@ const Loans = withRouter(({ history }) => {
   };
 
   function renderItemColumn(item, index, column) {
-    if (!item.Book.coverUrl) {
-      item.Book.coverUrl = resolveDefaultCover();
-    }
-
     const fieldContent = item[column.fieldName];
     let currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);

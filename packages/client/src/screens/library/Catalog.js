@@ -111,10 +111,6 @@ const Catalog = () => {
   };
 
   const onRenderCell = (item, index, isScrolling) => {
-    if (!item.coverUrl) {
-      item.coverUrl = resolveDefaultCover();
-    }
-
     return (
       <div
         className={classNames.itemCell}
@@ -123,7 +119,7 @@ const Catalog = () => {
       >
         <Image
           className={classNames.itemImage}
-          src={item.coverUrl}
+          src={item.coverUrl ? item.coverUrl : resolveDefaultCover()}
           width={42.5}
           height={60}
           imageFit={ImageFit.coverUrl}

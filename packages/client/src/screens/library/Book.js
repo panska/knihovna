@@ -3,6 +3,7 @@ import { Breadcrumb } from '@fluentui/react';
 import { withRouter, useLocation } from 'react-router-dom';
 import ShowMoreText from 'react-show-more-text';
 import Title from '../../components/Title';
+import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 
 const Book = withRouter(({ history }) => {
   const {
@@ -57,7 +58,10 @@ const Book = withRouter(({ history }) => {
       />
 
       <div className='book container'>
-        <img src={coverUrl} alt='Knižní obálka' />
+        <img
+          src={coverUrl ? coverUrl : resolveDefaultCover()}
+          alt='Knižní obálka'
+        />
         <div className='info'>
           <h1>{name}</h1>
           <ShowMoreText
