@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { loginRequest } from '../../config/config';
 import axios from 'axios';
+import Title from '../../components/Title';
 
 const Borrow = withRouter(({ history }) => {
   const { instance, accounts } = useMsal();
@@ -17,6 +18,7 @@ const Borrow = withRouter(({ history }) => {
   if (state.permissions && state.permissions.includes('SPRAVCE_KNIHOVNY')) {
     return (
       <>
+        <Title text='Vypůjčit knihu' />
         <Breadcrumb
           className='breadcrumb'
           items={[
@@ -140,11 +142,12 @@ const Borrow = withRouter(({ history }) => {
     );
   } else {
     return (
-      <>
+      <div>
+        <Title text='Přístup zakázán' />
         <div className='heading'>
           <h1>Přístup zakázán</h1>
         </div>
-      </>
+      </div>
     );
   }
 });

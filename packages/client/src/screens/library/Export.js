@@ -4,6 +4,7 @@ import { Breadcrumb, PrimaryButton } from '@fluentui/react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import jsonexport from 'jsonexport/dist';
+import Title from '../../components/Title';
 
 const Export = withRouter(({ history }) => {
   const [state, dispatch] = useContext(Context);
@@ -27,6 +28,7 @@ const Export = withRouter(({ history }) => {
   if (state.permissions && state.permissions.includes('SPRAVCE_KNIHOVNY')) {
     return (
       <>
+        <Title text='Export databáze' />
         <Breadcrumb
           className='breadcrumb'
           items={[
@@ -82,11 +84,12 @@ const Export = withRouter(({ history }) => {
     );
   } else {
     return (
-      <>
+      <div>
+        <Title text='Přístup zakázán' />
         <div className='heading'>
           <h1>Přístup zakázán</h1>
         </div>
-      </>
+      </div>
     );
   }
 });

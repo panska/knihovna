@@ -3,6 +3,7 @@ import { Link, DetailsList, SelectionMode, SearchBox } from '@fluentui/react';
 import axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
+import Title from '../../components/Title';
 
 const Loans = () => {
   const [items, setItems] = useState({
@@ -201,6 +202,7 @@ const Loans = () => {
 
   return (
     <div className='loans'>
+      <Title text='Výpůjčky' />
       <div className='heading'>
         <h1>Výpůjčky</h1>
       </div>

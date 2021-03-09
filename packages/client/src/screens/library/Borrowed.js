@@ -22,6 +22,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
+import Title from '../../components/Title';
 
 const Borrowed = () => {
   const { instance, accounts } = useMsal();
@@ -197,6 +198,7 @@ const Borrowed = () => {
 
   return (
     <div className='borrowed'>
+      <Title text='Moje výpůjčky' />
       <AuthenticatedTemplate>
         <MessageBar messageBarType={MessageBarType.warning} isMultiline={false}>
           Knihovna je v této době v omezeném provozu.
@@ -233,7 +235,8 @@ const Borrowed = () => {
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
         <div>
-          <div className='manage form container'>
+          <Title text='Přístup zakázán' />
+          <div className='heading'>
             <h1>Přístup zakázán</h1>
           </div>
         </div>

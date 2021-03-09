@@ -2,6 +2,7 @@ import React from 'react';
 import { Breadcrumb } from '@fluentui/react';
 import { withRouter, useLocation } from 'react-router-dom';
 import ShowMoreText from 'react-show-more-text';
+import Title from '../../components/Title';
 
 const Book = withRouter(({ history }) => {
   const {
@@ -29,6 +30,7 @@ const Book = withRouter(({ history }) => {
 
   return (
     <>
+      <Title text={name} />
       <Breadcrumb
         className='breadcrumb'
         items={[

@@ -17,6 +17,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
+import Title from '../../components/Title';
 
 const Catalog = () => {
   const [items, setItems] = useState([]);
@@ -204,6 +205,7 @@ const Catalog = () => {
 
   return (
     <div className='catalog'>
+      <Title text='Katalog knihovny' />
       <MessageBar messageBarType={MessageBarType.warning} isMultiline={false}>
         Knihovna je v této době v omezeném provozu.
         <Link href='/knihovna/katalog'>Více informací.</Link>

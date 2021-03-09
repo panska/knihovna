@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Context } from '../../components/App';
 import { Link } from '@fluentui/react';
 import { Link as RouterLink } from 'react-router-dom';
+import Title from '../../components/Title';
 
 const Manage = () => {
   const [state, dispatch] = useContext(Context);
@@ -9,6 +10,7 @@ const Manage = () => {
   if (state.permissions && state.permissions.includes('SPRAVCE_KNIHOVNY')) {
     return (
       <div className='manage'>
+        <Title text='Správa knihovny' />
         <div className='heading'>
           <h1>Správa knihovny</h1>
         </div>
@@ -70,6 +72,7 @@ const Manage = () => {
   } else {
     return (
       <div>
+        <Title text='Přístup zakázán' />
         <div className='heading'>
           <h1>Přístup zakázán</h1>
         </div>

@@ -6,6 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useMsal, useAccount } from '@azure/msal-react';
 import { loginRequest } from '../../config/config';
 import axios from 'axios';
+import Title from '../../components/Title';
 
 const Return = withRouter(({ history }) => {
   const { instance, accounts } = useMsal();
@@ -17,6 +18,7 @@ const Return = withRouter(({ history }) => {
   if (state.permissions && state.permissions.includes('SPRAVCE_KNIHOVNY')) {
     return (
       <>
+        <Title text='Vrátit knihu' />
         <Breadcrumb
           className='breadcrumb'
           items={[
@@ -117,11 +119,12 @@ const Return = withRouter(({ history }) => {
     );
   } else {
     return (
-      <>
+      <div>
+        <Title text='Přístup zakázán' />
         <div className='heading'>
           <h1>Přístup zakázán</h1>
         </div>
-      </>
+      </div>
     );
   }
 });

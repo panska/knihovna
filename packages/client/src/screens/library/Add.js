@@ -11,6 +11,7 @@ import { withRouter } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { loginRequest } from '../../config/config';
 import axios from 'axios';
+import Title from '../../components/Title';
 
 const Add = withRouter(({ history }) => {
   const { instance, accounts } = useMsal();
@@ -23,6 +24,7 @@ const Add = withRouter(({ history }) => {
   if (state.permissions && state.permissions.includes('SPRAVCE_KNIHOVNY')) {
     return (
       <>
+        <Title text='Přidat knihu do databáze' />
         <Breadcrumb
           className='breadcrumb'
           items={[
@@ -363,11 +365,12 @@ const Add = withRouter(({ history }) => {
     );
   } else {
     return (
-      <>
+      <div>
+        <Title text='Přístup zakázán' />
         <div className='heading'>
           <h1>Přístup zakázán</h1>
         </div>
-      </>
+      </div>
     );
   }
 });
