@@ -260,6 +260,21 @@ router.post('/return', async (req, res) => {
   }
 });
 
+router.put('/loan', async (req, res) => {
+  const { id, period } = req.body.data;
+  const bookLoan = await BookLoan.findOne({
+    where: {
+      id,
+    },
+  });
+  extendedDate = new Date(bookLoan.returnDate);
+  extendedDate.setDate(extendedDate.getDate() + parseInt(period));
+  bookLoan.returnDate = extendedDate;
+  bookLoan.save().then(() => {
+    res.sendStatus(200);
+  });
+});
+
 router.get('/loan/all', async (req, res) => {
   let bookLoans = await BookLoan.findAll({
     include: [

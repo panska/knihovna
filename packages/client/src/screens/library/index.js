@@ -8,3 +8,4 @@ export { default as Return } from './Return';
 export { default as Book } from './Book';
 export { default as Loans } from './Loans';
 export { default as Export } from './Export';
+export { default as Extend } from './Extend';

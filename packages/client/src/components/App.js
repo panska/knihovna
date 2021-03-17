@@ -19,6 +19,7 @@ import {
   Book,
   Loans,
   Export,
+  Extend,
 } from '../screens/library';
 import Admin from '../screens/Admin';
 import _404 from '../screens/404';
@@ -78,7 +79,9 @@ const App = () => {
                 <Route path='/knihovna/sprava/vypujcit-knihu'>
                   <Borrow />
                 </Route>
-                <Route path='/knihovna/sprava/prodlouzit-vypujcku'></Route>
+                <Route path='/knihovna/sprava/prodlouzit-vypujcku'>
+                  <Extend />
+                </Route>
                 <Route path='/knihovna/sprava/vratit-knihu'>
                   <Return />
                 </Route>

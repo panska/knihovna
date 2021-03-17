@@ -37,6 +37,11 @@ const Manage = () => {
               </Link>
             </li>
             <li>
+              <Link as={RouterLink} to='/knihovna/sprava/export-databaze'>
+                Export databáze
+              </Link>
+            </li>
+            <li>
               <Link as={RouterLink} to='/knihovna/sprava/vypujcky'>
                 Výpůjčky
               </Link>
@@ -47,22 +52,13 @@ const Manage = () => {
               </Link>
             </li>
             <li>
-              <Link
-                as={RouterLink}
-                to='/knihovna/sprava/prodlouzit-vypujcku'
-                disabled={true}
-              >
+              <Link as={RouterLink} to='/knihovna/sprava/prodlouzit-vypujcku'>
                 Prodloužit výpůjčku
               </Link>
             </li>
             <li>
               <Link as={RouterLink} to='/knihovna/sprava/vratit-knihu'>
                 Vrátit knihu
-              </Link>
-            </li>
-            <li>
-              <Link as={RouterLink} to='/knihovna/sprava/export-databaze'>
-                Export databáze
               </Link>
             </li>
           </ul>
