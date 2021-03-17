@@ -30,7 +30,7 @@ router.get('/new', async (req, res) => {
         [Op.eq]: null,
       },
     },
-    order: [['createdAt', 'DESC']],
+    order: [['id', 'DESC']],
   });
   return res.json(books);
 });
