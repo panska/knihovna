@@ -35,11 +35,15 @@ const Book = withRouter(({ history }) => {
       <Breadcrumb
         className='breadcrumb'
         items={[
-          {
-            text: 'Knihovna',
-            key: 'f1',
-            as: 'p',
-          },
+          ...(source.text !== 'Úvod'
+            ? [
+                {
+                  text: 'Knihovna',
+                  key: 'f1',
+                  as: 'p',
+                },
+              ]
+            : []),
           {
             text: source.text,
             key: 'f2',
