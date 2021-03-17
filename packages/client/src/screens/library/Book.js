@@ -146,18 +146,26 @@ const Book = withRouter(({ history }) => {
                   )
                 )}
 
-                {inventoryNumber && (
+                {inventoryNumber == id ? (
                   <tr>
                     <th>Inventární číslo</th>
                     <td>{inventoryNumber}</td>
                   </tr>
-                )}
-
-                {id && (
-                  <tr>
-                    <th>Systémové číslo</th>
-                    <td>{id}</td>
-                  </tr>
+                ) : (
+                  <>
+                    {inventoryNumber && (
+                      <tr>
+                        <th>Inventární číslo</th>
+                        <td>{inventoryNumber}</td>
+                      </tr>
+                    )}
+                    {id && (
+                      <tr>
+                        <th>Systémové číslo</th>
+                        <td>{id}</td>
+                      </tr>
+                    )}
+                  </>
                 )}
               </tbody>
             </table>
