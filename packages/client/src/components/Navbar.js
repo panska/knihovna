@@ -41,18 +41,23 @@ const Navbar = () => {
                 Authorization: res.idToken,
               },
             })
-            .then((res) => {
-              dispatch({
-                type: 'UPDATE_PERMISSIONS',
-                payload: {
-                  permissions: res.data,
-                },
-              });
+            .then((permissions) => {
+              getProfilePicture(res.accessToken).then(
+                (profilePictureBase64) => {
+                  setProfilePicture(
+                    `data:image/jpeg;base64,${profilePictureBase64}`
+                  );
+                  dispatch({
+                    type: 'UPDATE_USER',
+                    payload: {
+                      permissions: permissions.data,
+                      profilePicture: `data:image/jpeg;base64,${profilePictureBase64}`,
+                      username: account.name,
+                    },
+                  });
+                }
+              );
             });
-
-          getProfilePicture(res.accessToken).then((profilePictureBase64) => {
-            setProfilePicture(`data:image/jpeg;base64,${profilePictureBase64}`);
-          });
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,6 +142,7 @@ const Navbar = () => {
             </li>
             <li>
               <ContextualMenu
+                className='navbarContextualMenu'
                 items={authenticatedItems}
                 hidden={!showContextualMenu}
                 target={target}
@@ -156,6 +162,7 @@ const Navbar = () => {
             </li>
             <li>
               <ContextualMenu
+                className='navbarContextualMenu'
                 items={UnauthenticatedItems}
                 hidden={!showContextualMenu}
                 target={target}

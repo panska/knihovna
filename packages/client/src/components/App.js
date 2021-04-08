@@ -21,6 +21,7 @@ import {
   Export,
   Extend,
 } from '../screens/library';
+import Cinema from '../screens/cinema';
 import Admin from '../screens/Admin';
 import _404 from '../screens/404';
 
@@ -32,10 +33,12 @@ const App = () => {
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case 'UPDATE_PERMISSIONS': {
+      case 'UPDATE_USER': {
         return {
           ...state,
           permissions: action.payload.permissions,
+          profilePicture: action.payload.profilePicture,
+          username: action.payload.username,
         };
       }
       default:
@@ -44,6 +47,7 @@ const App = () => {
   };
   const [state, dispatch] = useReducer(reducer, {
     permissions: [],
+    profilePicture: undefined,
   });
 
   return (
@@ -90,6 +94,18 @@ const App = () => {
                 </Route>
                 <Route path='/knihovna/sprava'>
                   <Manage />
+                </Route>
+                <Route path='/filmovy-klub/virtualni-kinosal'>
+                  <Cinema.VirtualHall />
+                </Route>
+                <Route path='/filmovy-klub/sprava/naplanovat-projekci'>
+                  <Cinema.Schedule />
+                </Route>
+                <Route path='/filmovy-klub/sprava/projekce'>
+                  <Cinema.Scheduled />
+                </Route>
+                <Route path='/filmovy-klub/sprava'>
+                  <Cinema.Manage />
                 </Route>
                 <Route path='/administrace'>
                   <Admin />

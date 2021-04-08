@@ -28,22 +28,22 @@ form {
   width: 100% !important;
 }
 
-table,
-th,
-td {
+.manage.form table,
+.manage.form th,
+.manage.form td {
   border: 1px solid black;
 }
 
-table {
+.manage.form table {
   margin-top: 1em;
 }
 
-th,
-td {
+.manage.form th,
+.manage.form td {
   padding: 0.25em;
 }
 
-th {
+.manage.form th {
   text-align: left;
 }
 
@@ -129,7 +129,7 @@ th {
   background-color: white;
 }
 
-.ms-Callout {
+.navbarContextualMenu .ms-Callout {
   right: 0px !important;
 }
 
@@ -169,7 +169,8 @@ div[name='Administrace'] a {
 
 .catalog .container,
 .loans .container,
-.index .container {
+.index .container,
+.projections .container {
   margin-left: 2em;
 }
 
@@ -269,12 +270,14 @@ div[name='Administrace'] a {
   overflow-x: hidden;
 }
 
-.loans .search {
+.loans .search,
+.projections .search {
   margin-top: 1em;
   width: 480px;
 }
 
-.loans .list {
+.loans .list,
+.projections .list {
   width: 960px;
 }
 
@@ -311,4 +314,177 @@ div[name='Administrace'] a {
 .index .book .author {
   font-size: 0.75em;
   opacity: 0.75;
+}
+
+/* screens/cinema/VirtualHall.js */
+
+.cinema {
+  margin-top: 2em;
+  margin-left: 2em !important;
+  height: 360px;
+}
+
+.cinema #videoplayer {
+  background-color: black;
+}
+
+.cinema .player {
+  width: 640px;
+}
+
+.cinema .player .controls {
+  width: 640px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  border: 1px solid rgb(237, 235, 233);
+}
+
+.cinema .player .slider {
+  margin: 0 1em 0 1em;
+}
+
+.cinema .hall {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.cinema .chat {
+  margin: 0 1em 0 1em;
+  height: 394px;
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+}
+
+.cinema .chat .area {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  background-color: rgb(237, 235, 233, 0.25);
+}
+
+.cinema .chat #messages {
+  list-style-type: none;
+  padding-bottom: 1em;
+}
+
+.cinema .chat .message {
+  display: flex;
+  flex-direction: row;
+  -ms-flex-direction: row;
+  padding: 1em 1em 0 1em;
+  border-radius: 3px;
+}
+
+.cinema .chat .message .profilePicture {
+  margin-right: 0.5em;
+}
+
+.cinema .chat .message .messageBody h1 {
+  color: rgb(0, 120, 212);
+  font-size: 12px;
+}
+
+.cinema .chat .message .messageText {
+  margin-top: 0.25em;
+  font-size: 14px;
+  word-wrap: break-all;
+}
+
+.cinema .chat .message .messageBody {
+  width: 100%;
+  padding: 0.75em 1em 1em 1em;
+  background-color: white;
+}
+
+.cinema .chat .message .messageHeading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cinema .chat .message .date {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.cinema .chat .ms-TextField-fieldGroup {
+  border: 0 !important;
+}
+
+.cinema .chat .messageInput {
+  border: 1px solid rgb(237, 235, 233);
+  height: 34px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.cinema .manage {
+  width: 640px;
+  border: 1px solid rgb(237, 235, 233);
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.cinema .manage .ms-TextField-fieldGroup {
+  border: 0;
+}
+
+.cinema .playing {
+  border: 1px solid rgb(237, 235, 233);
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.cinema .playing .poster {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.cinema .playing .info {
+  padding: 1em;
+}
+
+.cinema .playing .about,
+.cinema .watching .about {
+  text-transform: uppercase;
+  font-weight: 800;
+  opacity: 0.5;
+  font-size: 12px;
+}
+
+.cinema .playing .title {
+  font-size: 24px;
+}
+
+.cinema .playing .description {
+  font-size: 12px;
+}
+
+.cinema .playing .start {
+  padding-top: 0.5em;
+  opacity: 0.75;
+  font-size: 12px;
+}
+
+.cinema .watching {
+  margin: 1em 1em 1em 0;
+  border: 1px solid rgb(237, 235, 233);
+  padding: 0.5em;
+}
+
+.cinema .watching .ms-Facepile {
+  margin-top: 0.5em;
+}
+
+.cinema .watching ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cinema .chat .announcement {
+  text-align: center;
+  font-size: 11px;
+  color: grey;
+  padding: 0.5em;
 }
