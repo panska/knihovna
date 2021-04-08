@@ -86,36 +86,15 @@ router.post(
       deaccessYear,
       origin,
       purchasePrice,
+      graduationReading,
     } = req.body.data;
-    console.log({
-      isbn,
-      name,
-      authorFamilyName,
-      authorGivenName,
-      genre,
-      coverUrl,
-      annotation,
-      publicationYear,
-      publisher,
-      registrationYear,
-      deaccessYear,
-      origin,
-      purchasePrice,
-    });
     if (
       (isbn,
       name,
       authorFamilyName,
       authorGivenName,
-      genre,
-      coverUrl,
-      annotation,
       publicationYear,
-      publisher,
-      registrationYear,
-      deaccessYear,
-      origin,
-      purchasePrice)
+      publisher)
     ) {
       Book.findOrCreate({
         where: {
@@ -134,9 +113,12 @@ router.post(
           deaccessYear,
           origin,
           purchasePrice,
+          graduationReading,
         },
-      }).then((book, created) => {
-        console.log(created);
+      }).then(([book, created]) => {
+        if (!created) {
+          return res.sendStatus(409);
+        }
         return res.json(book);
       });
     } else {

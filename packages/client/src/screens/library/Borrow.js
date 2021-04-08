@@ -85,7 +85,7 @@ const Borrow = withRouter(({ history }) => {
                 noValidate
               >
                 <Controller
-                  as={<TextField label='ID knihy' placeholder='1' required />}
+                  as={<TextField label='ID knihy' required />}
                   name='id'
                   control={control}
                   rules={{ required: true }}
@@ -93,12 +93,7 @@ const Borrow = withRouter(({ history }) => {
 
                 <Controller
                   as={
-                    <TextField
-                      label='E-mail čtenáře'
-                      placeholder='20GKovacevicM@student.panska.cz'
-                      type='email'
-                      required
-                    />
+                    <TextField label='E-mail čtenáře' type='email' required />
                   }
                   name='email'
                   control={control}

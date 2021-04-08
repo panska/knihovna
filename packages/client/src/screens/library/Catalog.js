@@ -204,7 +204,6 @@ const Catalog = () => {
       <Title text='Katalog knihovny' />
       <MessageBar messageBarType={MessageBarType.warning} isMultiline={false}>
         Knihovna je v této době v omezeném provozu.
-        <Link href='/knihovna/katalog'>Více informací.</Link>
       </MessageBar>
 
       <div className='heading'>

@@ -198,9 +198,6 @@ const Borrowed = () => {
       <AuthenticatedTemplate>
         <MessageBar messageBarType={MessageBarType.warning} isMultiline={false}>
           Knihovna je v této době v omezeném provozu.
-          <Link href='#' target='_blank'>
-            Více informací.
-          </Link>
         </MessageBar>
         <div className='heading'>
           <h1>Právě půjčeno</h1>

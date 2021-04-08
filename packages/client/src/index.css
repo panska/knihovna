@@ -28,22 +28,16 @@ form {
   width: 100% !important;
 }
 
-.manage.form table,
-.manage.form th,
-.manage.form td {
-  border: 1px solid black;
-}
-
-.manage.form table {
+.book table {
   margin-top: 1em;
 }
 
-.manage.form th,
-.manage.form td {
+.book th,
+.book td {
   padding: 0.25em;
 }
 
-.manage.form th {
+.book th {
   text-align: left;
 }
 
@@ -202,10 +196,6 @@ div[name='Administrace'] a {
   margin-bottom: 0;
 }
 
-.manage.form.container #manage-library-add-form {
-  margin-top: 0.5em;
-}
-
 .breadcrumb {
   margin-left: 1.5em;
 }
@@ -218,6 +208,10 @@ div[name='Administrace'] a {
 
 .breadcrumb .ms-Link:hover {
   background-color: transparent !important;
+}
+
+.manage.form .graduationReadingInput {
+  margin-top: 0.75em;
 }
 
 /* screens/library/Book.js */

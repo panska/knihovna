@@ -107,13 +107,7 @@ const Remove = withRouter(({ history }) => {
                 noValidate
               >
                 <Controller
-                  as={
-                    <TextField
-                      label='ID knihy'
-                      description='Použijte identifikační kód uvedený v databázi.'
-                      required
-                    />
-                  }
+                  as={<TextField label='ID knihy' required />}
                   name='id'
                   control={control}
                   rules={{ required: true }}
