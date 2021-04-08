@@ -619,6 +619,7 @@ const VirtualHall = () => {
                   {lock.closestProjection.movieData}
                 </p>
                 <p className='start'>
+                  {lock.closestProjection.type},{' '}
                   {new Date(lock.closestProjection.start).toLocaleString('cs')}
                 </p>
               </div>
