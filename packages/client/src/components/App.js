@@ -8,19 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import Navigation from './Navigation';
 import Index from '../screens/Index';
-import {
-  Catalog,
-  Borrowed,
-  Manage,
-  Add,
-  Remove,
-  Borrow,
-  Return,
-  Book,
-  Loans,
-  Export,
-  Extend,
-} from '../screens/library';
+import Library from '../screens/library';
 import Cinema from '../screens/cinema';
 import Admin from '../screens/Admin';
 import _404 from '../screens/404';
@@ -62,38 +50,38 @@ const App = () => {
             <div className='router'>
               <Switch>
                 <Route path='/knihovna/katalog'>
-                  <Catalog />
+                  <Library.Catalog />
                 </Route>
                 <Route path='/knihovna/kniha'>
-                  <Book />
+                  <Library.Book />
                 </Route>
                 <Route path='/knihovna/moje-vypujcky'>
-                  <Borrowed />
+                  <Library.Borrowed />
                 </Route>
                 <Route path='/knihovna/sprava/pridat-knihu'>
-                  <Add />
+                  <Library.Add />
                 </Route>
                 <Route path='/knihovna/sprava/upravit-zaznam-knihy'></Route>
                 <Route path='/knihovna/sprava/odstranit-knihu'>
-                  <Remove />
+                  <Library.Remove />
                 </Route>
                 <Route path='/knihovna/sprava/vypujcky'>
-                  <Loans />
+                  <Library.Loans />
                 </Route>
                 <Route path='/knihovna/sprava/vypujcit-knihu'>
-                  <Borrow />
+                  <Library.Borrow />
                 </Route>
                 <Route path='/knihovna/sprava/prodlouzit-vypujcku'>
-                  <Extend />
+                  <Library.Extend />
                 </Route>
                 <Route path='/knihovna/sprava/vratit-knihu'>
-                  <Return />
+                  <Library.Return />
                 </Route>
                 <Route path='/knihovna/sprava/export-databaze'>
-                  <Export />
+                  <Library.Export />
                 </Route>
                 <Route path='/knihovna/sprava'>
-                  <Manage />
+                  <Library.Manage />
                 </Route>
                 <Route path='/filmovy-klub/virtualni-kinosal'>
                   <Cinema.VirtualHall />

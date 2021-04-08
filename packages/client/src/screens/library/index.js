@@ -1,11 +1,24 @@
-export { default as Catalog } from './Catalog';
-export { default as Borrowed } from './Borrowed';
-export { default as Manage } from './Manage';
-export { default as Add } from './Add';
-export { default as Remove } from './Remove';
-export { default as Borrow } from './Borrow';
-export { default as Return } from './Return';
-export { default as Book } from './Book';
-export { default as Loans } from './Loans';
-export { default as Export } from './Export';
-export { default as Extend } from './Extend';
+import Catalog from './Catalog';
+import Borrowed from './Borrowed';
+import Manage from './Manage';
+import Add from './Add';
+import Remove from './Remove';
+import Borrow from './Borrow';
+import Return from './Return';
+import Book from './Book';
+import Loans from './Loans';
+import Export from './Export';
+import Extend from './Extend';
+export default {
+  Catalog,
+  Borrowed,
+  Manage,
+  Add,
+  Remove,
+  Borrow,
+  Return,
+  Book,
+  Loans,
+  Export,
+  Extend,
+};
