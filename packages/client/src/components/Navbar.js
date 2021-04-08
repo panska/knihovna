@@ -142,7 +142,6 @@ const Navbar = () => {
             </li>
             <li>
               <ContextualMenu
-                className='navbarContextualMenu'
                 items={authenticatedItems}
                 hidden={!showContextualMenu}
                 target={target}
@@ -162,7 +161,6 @@ const Navbar = () => {
             </li>
             <li>
               <ContextualMenu
-                className='navbarContextualMenu'
                 items={UnauthenticatedItems}
                 hidden={!showContextualMenu}
                 target={target}

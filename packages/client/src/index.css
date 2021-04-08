@@ -129,7 +129,7 @@ form {
   background-color: white;
 }
 
-.navbarContextualMenu .ms-Callout {
+.ms-Callout.ms-ContextualMenu-Callout {
   right: 0px !important;
 }
 
