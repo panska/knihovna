@@ -9,6 +9,7 @@ import Book from './Book';
 import Loans from './Loans';
 import Export from './Export';
 import Extend from './Extend';
+import Edit from './Edit';
 export default {
   Catalog,
   Borrowed,
@@ -21,4 +22,5 @@ export default {
   Loans,
   Export,
   Extend,
+  Edit,
 };

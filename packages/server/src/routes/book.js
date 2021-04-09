@@ -149,6 +149,69 @@ router.post(
 );
 
 router.post(
+  '/edit',
+  asyncHandler(isLibraryManager),
+  asyncHandler(async (req, res) => {
+    let {
+      id,
+      isbn,
+      name,
+      authorFamilyName,
+      authorGivenName,
+      genre,
+      coverUrl,
+      annotation,
+      publicationYear,
+      publisher,
+      registrationYear,
+      deaccessYear,
+      origin,
+      purchasePrice,
+      graduationReading,
+    } = req.body.data;
+
+    if (id) {
+      let book = await Book.findOne({
+        where: {
+          [Op.or]: [
+            {
+              isbn: id,
+            },
+            {
+              id: parseInt(id),
+            },
+          ],
+        },
+      });
+
+      if (!book) {
+        return res.status(400);
+      }
+
+      book.isbn = isbn;
+      book.name = name;
+      book.authorFamilyName = authorFamilyName;
+      book.authorGivenName = authorGivenName;
+      book.genre = genre;
+      book.coverUrl = coverUrl;
+      book.annotation = annotation;
+      book.publicationYear = publicationYear;
+      book.publisher = publisher;
+      book.registrationYear = registrationYear;
+      book.deaccessYear = deaccessYear;
+      book.origin = origin;
+      book.purchasePrice = purchasePrice;
+      book.graduationReading = graduationReading;
+      await book.save();
+
+      return res.json(book);
+    } else {
+      return res.status(400);
+    }
+  })
+);
+
+router.post(
   '/loan',
   asyncHandler(isLibraryManager),
   asyncHandler(async (req, res) => {

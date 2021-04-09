@@ -23,11 +23,7 @@ const Manage = () => {
               </Link>
             </li>
             <li>
-              <Link
-                as={RouterLink}
-                to='/knihovna/sprava/upravit-zaznam-knihy'
-                disabled={true}
-              >
+              <Link as={RouterLink} to='/knihovna/sprava/upravit-zaznam-knihy'>
                 Upravit záznam knihy
               </Link>
             </li>

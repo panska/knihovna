@@ -61,7 +61,9 @@ const App = () => {
                 <Route path='/knihovna/sprava/pridat-knihu'>
                   <Library.Add />
                 </Route>
-                <Route path='/knihovna/sprava/upravit-zaznam-knihy'></Route>
+                <Route path='/knihovna/sprava/upravit-zaznam-knihy'>
+                  <Library.Edit />
+                </Route>
                 <Route path='/knihovna/sprava/odstranit-knihu'>
                   <Library.Remove />
                 </Route>
