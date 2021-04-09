@@ -12,9 +12,25 @@ router.get(
   })
 );
 
+router.get(
+  '/:projection',
+  asyncHandler(async (req, res) => {
+    if (req.params.projection) {
+      let projection = await Projection.findOne({
+        where: {
+          id: parseInt(req.params.projection),
+        },
+      });
+      return res.json(projection);
+    } else {
+      return res.sendStatus(400);
+    }
+  })
+);
+
 router.post(
   '/create',
-  isCinemaManager,
+  asyncHandler(isCinemaManager),
   asyncHandler(async (req, res) => {
     const { type, movieName, movieData, moviePoster, start } = req.body.data;
 
@@ -28,6 +44,37 @@ router.post(
       });
 
       return res.json(projection);
+    }
+  })
+);
+
+router.post(
+  '/edit',
+  asyncHandler(isCinemaManager),
+  asyncHandler(async (req, res) => {
+    let { id, type, movieName, movieData, moviePoster, start } = req.body.data;
+
+    if (id) {
+      let projection = await Projection.findOne({
+        where: {
+          id: parseInt(id),
+        },
+      });
+
+      if (!projection) {
+        return res.sendStatus(400);
+      }
+
+      projection.type = type;
+      projection.movieName = movieName;
+      projection.movieData = movieData;
+      projection.moviePoster = moviePoster;
+      projection.start = start;
+      await projection.save();
+
+      return res.json(projection);
+    } else {
+      return res.sendStatus(400);
     }
   })
 );

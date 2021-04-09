@@ -31,6 +31,14 @@ const Manage = () => {
             <li>
               <Link
                 as={RouterLink}
+                to='/filmovy-klub/sprava/upravit-naplanovanou-projekci'
+              >
+                Upravit naplánovanou projekci
+              </Link>
+            </li>
+            <li>
+              <Link
+                as={RouterLink}
                 to='/filmovy-klub/sprava/zrusit-naplanovanou-projekci'
               >
                 Zrušit naplánovanou projekci
