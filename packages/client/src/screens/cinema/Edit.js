@@ -297,7 +297,7 @@ const Edit = withRouter(({ history }) => {
                     .toLocaleString('cs-CZ', {
                       minimumIntegerDigits: 2,
                     })
-                    .substring(12, 17)}
+                    .substring(11, 17)}
                   control={control}
                   rules={{ required: true }}
                 />
