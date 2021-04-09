@@ -147,7 +147,7 @@ const VirtualHall = () => {
         return distancea - distanceb;
       });
       let future = sorted.filter((d) => {
-        return new Date(d.start) - diffdate > 0;
+        return new Date(d.start) - diffdate > 0 && d.type != 'živá';
       });
 
       setLock({ projecting: current[0], closestProjection: future[0] });

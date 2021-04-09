@@ -285,7 +285,6 @@ const Edit = withRouter(({ history }) => {
                           text: 'dar',
                         },
                       ]}
-                      defaultSelectedKey={editing.origin}
                     />
                   )}
                   name='origin'

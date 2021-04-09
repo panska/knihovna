@@ -169,7 +169,6 @@ const Edit = withRouter(({ history }) => {
                       placeholder='Vyberte možnost'
                       label='Typ projekce'
                       selectedKey={value}
-                      defaultSelectedKey={editing.type}
                       // eslint-disable-next-line react/jsx-no-bind
                       onChange={(ev, option, index) => {
                         onChange(option.key);
