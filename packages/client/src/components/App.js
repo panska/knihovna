@@ -91,6 +91,9 @@ const App = () => {
                 <Route path='/filmovy-klub/sprava/naplanovat-projekci'>
                   <Cinema.Schedule />
                 </Route>
+                <Route path='/filmovy-klub/sprava/zrusit-naplanovanou-projekci'>
+                  <Cinema.Cancel />
+                </Route>
                 <Route path='/filmovy-klub/sprava/projekce'>
                   <Cinema.Scheduled />
                 </Route>

@@ -32,4 +32,29 @@ router.post(
   })
 );
 
+router.post(
+  '/delete',
+  asyncHandler(isCinemaManager),
+  asyncHandler(async (req, res) => {
+    const { id } = req.body;
+
+    if (id) {
+      let projection = await Projection.findOne({
+        where: {
+          id: parseInt(id),
+        },
+      });
+
+      if (!projection) {
+        return res.sendStatus(400);
+      }
+
+      await projection.destroy();
+      return res.sendStatus(200);
+    } else {
+      return res.sendStatus(400);
+    }
+  })
+);
+
 module.exports = router;

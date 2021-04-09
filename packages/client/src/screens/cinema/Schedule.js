@@ -247,7 +247,7 @@ const Schedule = withRouter(({ history }) => {
         {scheduled && (
           <>
             <div className='manage form heading'>
-              <h1>Projekce byla úspěšné naplánována.</h1>
+              <h1>Projekce byla úspěšné naplánována</h1>
             </div>
           </>
         )}
