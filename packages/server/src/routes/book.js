@@ -134,16 +134,20 @@ router.post(
     const { id } = req.body;
 
     if (id) {
-      let book = await Book.destroy({
+      let book = await Book.findOne({
         where: {
           id: parseInt(id),
         },
       });
+
+      if (!book) {
+        return res.sendStatus(400);
+      }
+
+      await book.destroy();
       return res.sendStatus(200);
     } else {
-      return res.status(400).json({
-        error: 'INVALID_QUERY',
-      });
+      return res.sendStatus(400);
     }
   })
 );
@@ -185,7 +189,7 @@ router.post(
       });
 
       if (!book) {
-        return res.status(400);
+        return res.sendStatus(400);
       }
 
       book.isbn = isbn;
@@ -206,7 +210,7 @@ router.post(
 
       return res.json(book);
     } else {
-      return res.status(400);
+      return res.sendStatus(400);
     }
   })
 );

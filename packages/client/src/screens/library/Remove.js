@@ -27,6 +27,7 @@ const Remove = withRouter(({ history }) => {
   const hideDialog = () => {
     setDialogHidden(true);
   };
+  const [bookError, setBookError] = useState();
 
   const modalProps = React.useMemo(
     () => ({
@@ -60,6 +61,13 @@ const Remove = withRouter(({ history }) => {
             .then((res) => {
               setDialogHidden(true);
               setRemoved(true);
+            })
+            .catch((err) => {
+              if (err.response.status == 400) {
+                setDialogHidden(true);
+                setBookError(true);
+              }
+              console.log(err.response.message);
             });
         });
     }
@@ -93,7 +101,7 @@ const Remove = withRouter(({ history }) => {
           ]}
         />
 
-        {!removed && (
+        {!removed && !bookError && (
           <>
             <div className='manage form heading'>
               <h1>Odstranit knihu z databáze</h1>
@@ -141,6 +149,12 @@ const Remove = withRouter(({ history }) => {
               </form>
             </div>
           </>
+        )}
+
+        {bookError && (
+          <div className='manage form heading'>
+            <h1>Kniha nebyla nalezena</h1>
+          </div>
         )}
 
         {removed && (
