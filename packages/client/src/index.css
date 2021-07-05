@@ -147,9 +147,8 @@ div[name='Administrace'] a {
 
 /* screens/library/Catalog.js */
 
-.catalog {
-  overflow: hidden;
-  height: 90vh;
+.catalog .ms-FocusZone > div {
+  max-height: calc(100vh - 29px - 32px - 4em - 35.2px - 48px - 5em) !important;
 }
 
 .catalog .list {
