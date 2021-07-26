@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Context } from '../../components/App';
+import { Context } from '../../../components/App';
 import {
   TextField,
   PrimaryButton,
@@ -9,12 +9,12 @@ import {
 } from '@fluentui/react';
 import { withRouter } from 'react-router-dom';
 import { useMsal, useAccount } from '@azure/msal-react';
-import { loginRequest } from '../../config/config';
+import { loginRequest } from '../../../config/config';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import Title from '../../components/Title';
+import Title from '../../../components/Title';
 
-const Edit = withRouter(({ history }) => {
+const UpravitZaznamKnihy = withRouter(({ history }) => {
   const { handleSubmit, errors, control } = useForm();
   const [editing, setEditing] = useState();
   const [editingError, setEditingError] = useState();
@@ -350,4 +350,4 @@ const Edit = withRouter(({ history }) => {
   }
 });
 
-export default Edit;
+export default UpravitZaznamKnihy;

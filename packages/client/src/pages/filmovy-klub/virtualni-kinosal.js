@@ -15,9 +15,8 @@ import { io } from 'socket.io-client';
 import { useMsal, useAccount, useIsAuthenticated } from '@azure/msal-react';
 
 import axios from 'axios';
-import { Return } from '../library';
 
-const VirtualHall = () => {
+const VirtualniKinosal = () => {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
   const isAuthenticated = useIsAuthenticated();
@@ -631,4 +630,4 @@ const VirtualHall = () => {
   }
 };
 
-export default VirtualHall;
+export default VirtualniKinosal;

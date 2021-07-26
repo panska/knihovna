@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { Context } from '../../components/App';
+import { Context } from '../../../components/App';
 import { Breadcrumb, PrimaryButton } from '@fluentui/react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import jsonexport from 'jsonexport/dist';
-import Title from '../../components/Title';
+import Title from '../../../components/Title';
 
-const Export = withRouter(({ history }) => {
+const ExportDatabaze = withRouter(({ history }) => {
   const [state, dispatch] = useContext(Context);
   const [exported, setExported] = useState();
 
@@ -94,4 +94,4 @@ const Export = withRouter(({ history }) => {
   }
 });
 
-export default Export;
+export default ExportDatabaze;

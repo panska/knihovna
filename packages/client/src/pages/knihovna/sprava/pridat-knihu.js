@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Context } from '../../components/App';
+import { Context } from '../../../components/App';
 import {
   Breadcrumb,
   TextField,
@@ -10,11 +10,11 @@ import {
 import { useMsal, useAccount } from '@azure/msal-react';
 import { withRouter } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-import { loginRequest } from '../../config/config';
+import { loginRequest } from '../../../config/config';
 import axios from 'axios';
-import Title from '../../components/Title';
+import Title from '../../../components/Title';
 
-const Add = withRouter(({ history }) => {
+const PridatKnihu = withRouter(({ history }) => {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
   const [state, dispatch] = useContext(Context);
@@ -275,4 +275,4 @@ const Add = withRouter(({ history }) => {
   }
 });
 
-export default Add;
+export default PridatKnihu;

@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
-import { Context } from '../../components/App';
+import { Context } from '../../../components/App';
 import { TextField, PrimaryButton, Breadcrumb } from '@fluentui/react';
 import { withRouter } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { useMsal, useAccount } from '@azure/msal-react';
-import { loginRequest } from '../../config/config';
+import { loginRequest } from '../../../config/config';
 import axios from 'axios';
-import Title from '../../components/Title';
+import Title from '../../../components/Title';
 
-const Return = withRouter(({ history }) => {
+const VratitKnihu = withRouter(({ history }) => {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
   const { handleSubmit, errors, control } = useForm();
@@ -124,4 +124,4 @@ const Return = withRouter(({ history }) => {
   }
 });
 
-export default Return;
+export default VratitKnihu;

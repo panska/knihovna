@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Context } from '../../components/App';
+import { Context } from '../../../components/App';
 import {
   TextField,
   PrimaryButton,
@@ -11,15 +11,15 @@ import {
 } from '@fluentui/react';
 import { withRouter } from 'react-router-dom';
 import { useMsal, useAccount } from '@azure/msal-react';
-import { loginRequest } from '../../config/config';
+import { loginRequest } from '../../../config/config';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import Title from '../../components/Title';
+import Title from '../../../components/Title';
 
-const Remove = withRouter(({ history }) => {
+const ZrusitNaplanovanouProjekci = withRouter(({ history }) => {
   const { handleSubmit, errors, control } = useForm();
   const [data, setData] = useState();
-  const [removed, setRemoved] = useState(false);
+  const [canceled, setCanceled] = useState(false);
   const [state, dispatch] = useContext(Context);
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
@@ -27,7 +27,7 @@ const Remove = withRouter(({ history }) => {
   const hideDialog = () => {
     setDialogHidden(true);
   };
-  const [bookError, setBookError] = useState();
+  const [projectionError, setProjectionError] = useState();
 
   const modalProps = React.useMemo(
     () => ({
@@ -38,7 +38,7 @@ const Remove = withRouter(({ history }) => {
     []
   );
 
-  const removeBook = async () => {
+  const removeProjection = async () => {
     if (account) {
       instance
         .acquireTokenSilent({
@@ -48,7 +48,7 @@ const Remove = withRouter(({ history }) => {
         .then(async (res) => {
           await axios
             .post(
-              '/api/book/delete',
+              '/api/projection/delete',
               {
                 id: data.id,
               },
@@ -60,51 +60,55 @@ const Remove = withRouter(({ history }) => {
             )
             .then((res) => {
               setDialogHidden(true);
-              setRemoved(true);
+              setCanceled(true);
             })
             .catch((err) => {
               if (err.response.status == 400) {
                 setDialogHidden(true);
-                setBookError(true);
+                setProjectionError(true);
               }
               console.log(err.response.message);
             });
         });
     }
   };
-  if (state.permissions && state.permissions.includes('SPRAVCE_KNIHOVNY')) {
+
+  if (
+    state.permissions &&
+    state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+  ) {
     return (
       <>
-        <Title text='Odstranit knihu z databáze' />
+        <Title text='Zrušit naplánovanou projekci' />
         <Breadcrumb
           className='breadcrumb'
           items={[
             {
-              text: 'Knihovna',
+              text: 'Filmový klub',
               key: 'f1',
               as: 'p',
             },
             {
               text: 'Správa',
               key: 'f2',
-              pathname: '/knihovna/sprava',
+              pathname: '/filmovy-klub/sprava',
               onClick: (event, item) => {
                 event.preventDefault();
                 history.push(item.pathname);
               },
             },
             {
-              text: 'Odstranit knihu z databáze',
+              text: 'Zrušit naplánovanou projekci',
               key: 'f3',
               as: 'p',
             },
           ]}
         />
 
-        {!removed && !bookError && (
+        {!canceled && !projectionError && (
           <>
             <div className='manage form heading'>
-              <h1>Odstranit knihu z databáze</h1>
+              <h1>Zrušit naplánovanou projekci</h1>
             </div>
             <div className='manage form container'>
               <form
@@ -115,7 +119,7 @@ const Remove = withRouter(({ history }) => {
                 noValidate
               >
                 <Controller
-                  as={<TextField label='ID knihy' required />}
+                  as={<TextField label='ID projekce' required />}
                   name='id'
                   control={control}
                   rules={{ required: true }}
@@ -127,39 +131,34 @@ const Remove = withRouter(({ history }) => {
                   dialogContentProps={{
                     type: DialogType.normal,
                     title: 'Potvrzení',
-                    subText:
-                      'Opravdu chcete uvedenou knihu odstranit z databáze?',
+                    subText: 'Opravdu chcete uvedenou projekci zrušit?',
                   }}
                   modalProps={modalProps}
                 >
                   <DialogFooter>
                     <PrimaryButton
-                      onClick={removeBook}
+                      onClick={removeProjection}
                       text='Ano, pokračovat'
                     />
                     <DefaultButton onClick={hideDialog} text='Zrušit' />
                   </DialogFooter>
                 </Dialog>
 
-                <PrimaryButton
-                  className='submit'
-                  text='Odstranit'
-                  type='submit'
-                />
+                <PrimaryButton className='submit' text='Zrušit' type='submit' />
               </form>
             </div>
           </>
         )}
 
-        {bookError && (
+        {projectionError && (
           <div className='manage form heading'>
-            <h1>Kniha nebyla nalezena</h1>
+            <h1>Projekce nebyla nalezena</h1>
           </div>
         )}
 
-        {removed && (
+        {canceled && (
           <div className='manage form heading'>
-            <h1>Kniha byla úspěšné odstraněna z databáze</h1>
+            <h1>Projekce byla úspěšné zrušená</h1>
           </div>
         )}
       </>
@@ -176,4 +175,4 @@ const Remove = withRouter(({ history }) => {
   }
 });
 
-export default Remove;
+export default ZrusitNaplanovanouProjekci;

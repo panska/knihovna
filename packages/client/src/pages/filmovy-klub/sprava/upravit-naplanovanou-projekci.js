@@ -1,28 +1,30 @@
-import React, { useContext, useState } from 'react';
-import { Context } from '../../components/App';
+import React, { useState, useContext } from 'react';
+import { Context } from '../../../components/App';
 import {
-  Breadcrumb,
+  TextField,
   PrimaryButton,
+  Breadcrumb,
+  Dropdown,
   DatePicker,
   DayOfWeek,
-  TextField,
   MaskedTextField,
-  Dropdown,
+  concatStyleSetsWithProps,
 } from '@fluentui/react';
 import { withRouter } from 'react-router-dom';
 import { useMsal, useAccount } from '@azure/msal-react';
-import { loginRequest } from '../../config/config';
+import { loginRequest } from '../../../config/config';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import Title from '../../components/Title';
+import Title from '../../../components/Title';
 
-const Schedule = withRouter(({ history }) => {
+const UpravitNaplanovanouProjekci = withRouter(({ history }) => {
+  const { handleSubmit, errors, control } = useForm();
+  const [editing, setEditing] = useState();
+  const [editingError, setEditingError] = useState();
+  const [edited, setEdited] = useState(false);
+  const [state, dispatch] = useContext(Context);
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
-  const [state, dispatch] = useContext(Context);
-  const { handleSubmit, errors, control } = useForm();
-  const [scheduled, setScheduled] = useState();
-  const [selectedOption, setSelectedOption] = useState();
 
   if (
     state.permissions &&
@@ -30,7 +32,7 @@ const Schedule = withRouter(({ history }) => {
   ) {
     return (
       <>
-        <Title text='Naplánovat projekci' />
+        <Title text='Upravit naplánovanou projekci' />
         <Breadcrumb
           className='breadcrumb'
           items={[
@@ -49,19 +51,18 @@ const Schedule = withRouter(({ history }) => {
               },
             },
             {
-              text: 'Naplánovat projekci',
+              text: 'Upravit naplánovanou projekci',
               key: 'f3',
               as: 'p',
             },
           ]}
         />
 
-        {!scheduled && (
-          <div className='schedule'>
+        {!edited && !editing && !editingError && (
+          <>
             <div className='manage form heading'>
-              <h1>Naplánovat projekci</h1>
+              <h1>Upravit naplánovanou projekci</h1>
             </div>
-
             <div className='manage form container'>
               <form
                 onSubmit={handleSubmit(async (data) => {
@@ -72,15 +73,76 @@ const Schedule = withRouter(({ history }) => {
                         account: account,
                       })
                       .then(async (res) => {
+                        await axios
+                          .get(`/api/projection/${data.id}`, {
+                            headers: {
+                              Authorization: res.idToken,
+                            },
+                          })
+                          .then((res) => {
+                            if (!res.data) {
+                              setEditingError(true);
+                              return;
+                            }
+
+                            res.data.id = data.id;
+                            setEditing(res.data);
+                          })
+                          .catch((err) => {
+                            console.log(err.response.message);
+                          });
+                      });
+                  }
+                })}
+                noValidate
+              >
+                <Controller
+                  as={<TextField label='ID projekce' required />}
+                  name='id'
+                  control={control}
+                  rules={{ required: true }}
+                />
+
+                <PrimaryButton
+                  className='submit'
+                  text='Upravit'
+                  type='submit'
+                />
+              </form>
+            </div>
+          </>
+        )}
+
+        {editingError && (
+          <div className='manage form heading'>
+            <h1>Projekce nebyla nalezena</h1>
+          </div>
+        )}
+
+        {editing && !edited && (
+          <>
+            <div className='manage form heading'>
+              <h1>Upravit naplánovanou projekci</h1>
+            </div>
+            <div className='manage form container'>
+              <form
+                onSubmit={handleSubmit(async (data) => {
+                  if (account) {
+                    instance
+                      .acquireTokenSilent({
+                        ...loginRequest,
+                        account: account,
+                      })
+                      .then(async (res) => {
+                        data.id = editing.id;
                         data.date.setHours(parseInt(data.time.substring(0, 2)));
                         data.date.setMinutes(
                           parseInt(data.time.substring(3, 5))
                         );
                         data.start = new Date(data.date);
-
                         await axios
                           .post(
-                            '/api/projection/create',
+                            '/api/projection/edit',
                             {
                               data,
                             },
@@ -91,7 +153,7 @@ const Schedule = withRouter(({ history }) => {
                             }
                           )
                           .then((res) => {
-                            setScheduled(true);
+                            setEdited(true);
                           })
                           .catch((err) => {
                             console.log(err.response.message);
@@ -109,7 +171,6 @@ const Schedule = withRouter(({ history }) => {
                       selectedKey={value}
                       // eslint-disable-next-line react/jsx-no-bind
                       onChange={(ev, option, index) => {
-                        setSelectedOption(option.key);
                         onChange(option.key);
                       }}
                       options={[
@@ -126,12 +187,14 @@ const Schedule = withRouter(({ history }) => {
                     />
                   )}
                   name='type'
+                  defaultValue={editing.type}
                   control={control}
                   rules={{ required: true }}
                 />
                 <Controller
                   as={<TextField label='Název filmu' required />}
                   name='movieName'
+                  defaultValue={editing.movieName}
                   control={control}
                   rules={{ required: true }}
                 />
@@ -145,12 +208,14 @@ const Schedule = withRouter(({ history }) => {
                     />
                   }
                   name='movieData'
+                  defaultValue={editing.movieData}
                   control={control}
                   rules={{ required: true }}
                 />
                 <Controller
                   as={<TextField label='Filmový plakát' required />}
                   name='moviePoster'
+                  defaultValue={editing.moviePoster}
                   control={control}
                   rules={{ required: true }}
                 />
@@ -160,7 +225,7 @@ const Schedule = withRouter(({ history }) => {
                       label='Datum projekce'
                       isRequired={true}
                       showMonthPickerAsOverlay={true}
-                      value={value}
+                      value={new Date(editing.start)}
                       onSelectDate={(date) => {
                         if (!date) {
                           return;
@@ -215,6 +280,7 @@ const Schedule = withRouter(({ history }) => {
                     />
                   )}
                   name='date'
+                  defaultValue={new Date(editing.start)}
                   control={control}
                   rules={{ required: true }}
                 />
@@ -227,25 +293,28 @@ const Schedule = withRouter(({ history }) => {
                     />
                   }
                   name='time'
+                  defaultValue={new Date(editing.start)
+                    .toLocaleString('cs-CZ', {
+                      minimumIntegerDigits: 2,
+                    })
+                    .substring(11, 17)}
                   control={control}
                   rules={{ required: true }}
                 />
                 <PrimaryButton
                   className='submit'
-                  text='Naplánovat'
+                  text='Upravit'
                   type='submit'
                 />
               </form>
             </div>
-          </div>
+          </>
         )}
 
-        {scheduled && (
-          <>
-            <div className='manage form heading'>
-              <h1>Projekce byla úspěšné naplánována</h1>
-            </div>
-          </>
+        {edited && (
+          <div className='manage form heading'>
+            <h1>Projekce byla úspěšné upravená</h1>
+          </div>
         )}
       </>
     );
@@ -261,4 +330,4 @@ const Schedule = withRouter(({ history }) => {
   }
 });
 
-export default Schedule;
+export default UpravitNaplanovanouProjekci;

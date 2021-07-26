@@ -139,13 +139,13 @@ div[name='Administrace'] a {
   padding: 0 0 0 0.5em;
 }
 
-/* screens/404.js */
+/* pages/404.js */
 
 ._404 {
   margin: 1em 0 0 2em;
 }
 
-/* screens/library/Catalog.js */
+/* pages/knihovna/Catalog.js */
 
 .catalog .ms-FocusZone > div {
   max-height: calc(100vh - 29px - 32px - 4em - 35.2px - 48px - 5em) !important;
@@ -167,7 +167,7 @@ div[name='Administrace'] a {
   margin-left: 2em;
 }
 
-/* screens/library/Loans.js */
+/* pages/knihovna/Loans.js */
 
 .borrowed .heading,
 .borrowed .list {
@@ -175,7 +175,7 @@ div[name='Administrace'] a {
   margin-left: 2em;
 }
 
-/* screens/library/index */
+/* pages/knihovna/index */
 
 .manage .heading,
 .manage.form.container {
@@ -213,7 +213,7 @@ div[name='Administrace'] a {
   margin-top: 0.75em;
 }
 
-/* screens/library/Book.js */
+/* pages/knihovna/Book.js */
 
 .book.container {
   margin: 0.5em;
@@ -257,7 +257,7 @@ div[name='Administrace'] a {
   padding-left: 2em;
 }
 
-/* screens/library/Loans.js */
+/* pages/knihovna/Loans.js */
 
 .ms-DetailsList {
   overflow-x: hidden;
@@ -274,7 +274,7 @@ div[name='Administrace'] a {
   width: 960px;
 }
 
-/* screens/Index.js */
+/* pages/Index.js */
 
 .index .books {
   display: flex;
@@ -309,7 +309,7 @@ div[name='Administrace'] a {
   opacity: 0.75;
 }
 
-/* screens/cinema/VirtualHall.js */
+/* pages/filmovy-klub/VirtualHall.js */
 
 .cinema {
   margin-top: 2em;

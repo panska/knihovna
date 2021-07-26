@@ -4,14 +4,14 @@ import { PublicClientApplication } from '@azure/msal-browser';
 import { msalConfig } from '../config/config';
 import { initializeIcons } from '@uifabric/icons';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
 import Navbar from './Navbar';
 import Navigation from './Navigation';
-import Index from '../screens/Index';
-import Library from '../screens/library';
-import Cinema from '../screens/cinema';
-import Admin from '../screens/Admin';
-import _404 from '../screens/404';
+
+import knihovna from '../pages/knihovna';
+import filmovyKlub from '../pages/filmovy-klub';
+import Index from '../pages';
+import Admin from '../pages/admin';
+import _404 from '../pages/404';
 
 const Context = createContext({ permissions: [] });
 
@@ -49,59 +49,59 @@ const App = () => {
             </div>
             <div className='router'>
               <Switch>
-                <Route path='/knihovna/katalog'>
-                  <Library.Catalog />
-                </Route>
                 <Route path='/knihovna/kniha'>
-                  <Library.Book />
+                  <knihovna.Kniha />
+                </Route>
+                <Route path='/knihovna/katalog'>
+                  <knihovna.Katalog />
                 </Route>
                 <Route path='/knihovna/moje-vypujcky'>
-                  <Library.Borrowed />
+                  <knihovna.MojeVypujcky />
                 </Route>
                 <Route path='/knihovna/sprava/pridat-knihu'>
-                  <Library.Add />
+                  <knihovna.sprava.PridatKnihu />
                 </Route>
                 <Route path='/knihovna/sprava/upravit-zaznam-knihy'>
-                  <Library.Edit />
+                  <knihovna.sprava.UpravitZaznamKnihy />
                 </Route>
                 <Route path='/knihovna/sprava/odstranit-knihu'>
-                  <Library.Remove />
-                </Route>
-                <Route path='/knihovna/sprava/vypujcky'>
-                  <Library.Loans />
+                  <knihovna.sprava.OdstranitKnihu />
                 </Route>
                 <Route path='/knihovna/sprava/vypujcit-knihu'>
-                  <Library.Borrow />
+                  <knihovna.sprava.VypujcitKnihu />
                 </Route>
                 <Route path='/knihovna/sprava/prodlouzit-vypujcku'>
-                  <Library.Extend />
+                  <knihovna.sprava.ProdlouzitVypujcku />
                 </Route>
                 <Route path='/knihovna/sprava/vratit-knihu'>
-                  <Library.Return />
+                  <knihovna.sprava.VratitKnihu />
+                </Route>
+                <Route path='/knihovna/sprava/vypujcky'>
+                  <knihovna.sprava.Vypujcky />
                 </Route>
                 <Route path='/knihovna/sprava/export-databaze'>
-                  <Library.Export />
+                  <knihovna.sprava.ExportDatabaze />
                 </Route>
                 <Route path='/knihovna/sprava'>
-                  <Library.Manage />
+                  <knihovna.Sprava />
                 </Route>
                 <Route path='/filmovy-klub/virtualni-kinosal'>
-                  <Cinema.VirtualHall />
+                  <filmovyKlub.VirtualniKinosal />
                 </Route>
                 <Route path='/filmovy-klub/sprava/naplanovat-projekci'>
-                  <Cinema.Schedule />
+                  <filmovyKlub.sprava.NaplanovatProjekci />
                 </Route>
                 <Route path='/filmovy-klub/sprava/upravit-naplanovanou-projekci'>
-                  <Cinema.Edit />
+                  <filmovyKlub.sprava.UpravitNaplanovanouProjekci />
                 </Route>
                 <Route path='/filmovy-klub/sprava/zrusit-naplanovanou-projekci'>
-                  <Cinema.Cancel />
+                  <filmovyKlub.sprava.ZrusitNaplanovanouProjekci />
                 </Route>
                 <Route path='/filmovy-klub/sprava/projekce'>
-                  <Cinema.Scheduled />
+                  <filmovyKlub.sprava.Projekce />
                 </Route>
                 <Route path='/filmovy-klub/sprava'>
-                  <Cinema.Manage />
+                  <filmovyKlub.Sprava />
                 </Route>
                 <Route path='/administrace'>
                   <Admin />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Context } from '../../components/App';
+import { Context } from '../../../components/App';
 import {
   Link,
   DetailsList,
@@ -10,10 +10,9 @@ import {
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
-import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
-import Title from '../../components/Title';
+import Title from '../../../components/Title';
 
-const Loans = withRouter(({ history }) => {
+const Vypujcky = withRouter(({ history }) => {
   const [state, dispatch] = useContext(Context);
   const [items, setItems] = useState({
     sortedItems: [],
@@ -272,4 +271,4 @@ const Loans = withRouter(({ history }) => {
   }
 });
 
-export default Loans;
+export default Vypujcky;

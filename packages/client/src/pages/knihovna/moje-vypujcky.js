@@ -24,7 +24,7 @@ import axios from 'axios';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 import Title from '../../components/Title';
 
-const Borrowed = () => {
+const MojeVypujcky = () => {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
   const isAuthenticated = useIsAuthenticated();
@@ -238,4 +238,4 @@ const Borrowed = () => {
   );
 };
 
-export default Borrowed;
+export default MojeVypujcky;

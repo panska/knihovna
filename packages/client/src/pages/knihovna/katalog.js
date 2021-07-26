@@ -19,7 +19,7 @@ import axios from 'axios';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 import Title from '../../components/Title';
 
-const Catalog = () => {
+const Katalog = () => {
   const [items, setItems] = useState([]);
   const [itemsCopy, setItemsCopy] = useState(items);
   const [graduationReading, setGraduationReading] = useState(false);
@@ -239,4 +239,4 @@ const Catalog = () => {
   );
 };
 
-export default Catalog;
+export default Katalog;

@@ -5,7 +5,7 @@ import ShowMoreText from 'react-show-more-text';
 import Title from '../../components/Title';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 
-const Book = withRouter(({ history }) => {
+const Kniha = withRouter(({ history }) => {
   const {
     source,
     id,
@@ -176,4 +176,4 @@ const Book = withRouter(({ history }) => {
   );
 });
 
-export default Book;
+export default Kniha;

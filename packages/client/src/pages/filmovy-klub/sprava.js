@@ -4,7 +4,7 @@ import { Link } from '@fluentui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import Title from '../../components/Title';
 
-const Manage = () => {
+const Sprava = () => {
   const [state, dispatch] = useContext(Context);
 
   if (
@@ -65,4 +65,4 @@ const Manage = () => {
   }
 };
 
-export default Manage;
+export default Sprava;
