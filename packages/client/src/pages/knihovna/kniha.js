@@ -217,6 +217,9 @@ const Kniha = styled(
   .detail.annotation {
     line-height: 1.5em;
   }
+  a:visited {
+    color: blue;
+  }
 `;
 
 export default Kniha;
