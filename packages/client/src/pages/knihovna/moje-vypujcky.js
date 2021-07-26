@@ -21,10 +21,11 @@ import {
 } from '@azure/msal-react';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 import Title from '../../components/Title';
 
-const MojeVypujcky = () => {
+const MojeVypujcky = styled(({ className }) => {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
   const isAuthenticated = useIsAuthenticated();
@@ -193,7 +194,7 @@ const MojeVypujcky = () => {
   });
 
   return (
-    <div className='borrowed'>
+    <div className={className}>
       <Title text='Moje výpůjčky' />
       <AuthenticatedTemplate>
         <MessageBar messageBarType={MessageBarType.warning} isMultiline={false}>
@@ -236,6 +237,12 @@ const MojeVypujcky = () => {
       </UnauthenticatedTemplate>
     </div>
   );
-};
+})`
+  .heading,
+  .list {
+    margin: 1em;
+    margin-left: 2em;
+  }
+`;
 
 export default MojeVypujcky;

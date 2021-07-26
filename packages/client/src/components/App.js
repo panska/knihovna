@@ -4,6 +4,8 @@ import { PublicClientApplication } from '@azure/msal-browser';
 import { msalConfig } from '../config/config';
 import { initializeIcons } from '@uifabric/icons';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
 import Navbar from './Navbar';
 import Navigation from './Navigation';
@@ -16,7 +18,100 @@ import _404 from '../pages/404';
 
 const Context = createContext({ permissions: [] });
 
-const App = () => {
+const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .heading {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 2em;
+  }
+  form {
+    width: 397.25px !important;
+    margin-bottom: 1.5em;
+  }
+  .ms-Label::after {
+    display: inline-block;
+    padding-left: 1.5px;
+  }
+  .submit {
+    margin-top: 1em;
+    width: 100% !important;
+  }
+  .list {
+    width: 480px;
+    scrollbar-color: transparent transparent;
+  }
+  .list::-webkit-scrollbar {
+    display: none;
+  }
+  .list::-moz-scrollbar {
+    display: none;
+  }
+  .ms-Callout.ms-ContextualMenu-Callout {
+    right: 0px !important;
+  }
+  .ms-DetailsList {
+  overflow-x: hidden;
+  }
+  .manage .heading,
+  .manage.form.container {
+    margin-bottom: 0.25em;
+  }
+  .manage.form.container {
+    margin-left: 2em;
+  }
+  .manage .nav {
+    margin-left: 4em;
+  }
+  .manage.form.heading {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .breadcrumb {
+    margin-left: 1.5em;
+  }
+  .breadcrumb .ms-Breadcrumb-itemLink,
+  .breadcrumb .ms-Breadcrumb-item {
+    font-size: 14px !important;
+    font-weight: 400;
+  }
+  .breadcrumb .ms-Link:hover {
+    background-color: transparent !important;
+  }
+  .manage.form .graduationReadingInput {
+    margin-top: 0.75em;
+  }
+  table {
+    margin-top: 0.25em;
+    border: 0;
+  }
+  table,
+  th,
+  td {
+    border: 0;
+  }
+  th {
+    opacity: 0.75;
+    font-weight: 400;
+  }
+  td {
+    padding-left: 2em;
+  }
+  th,
+  td {
+    padding: 0.25em;
+  }
+  th {
+    text-align: left;
+  }
+`;
+
+const App = styled(({ className }) => {
   initializeIcons();
   const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -42,8 +137,9 @@ const App = () => {
   return (
     <MsalProvider instance={msalInstance}>
       <Context.Provider value={[state, dispatch]}>
+        <GlobalStyle />
         <Navbar />
-        <div className='body'>
+        <div className={className}>
           <Router>
             <div className='navigation'>
               <Navigation />
@@ -120,6 +216,19 @@ const App = () => {
       </Context.Provider>
     </MsalProvider>
   );
-};
+})`
+  display: grid;
+  grid-template-columns: 240px auto;
+  .navigation {
+    width: 240px !important;
+    height: calc(100vh - 48px);
+    background-color: rgb(237, 235, 233) !important;
+    grid-template-columns: repeat(2, fr);
+  }
+  .router {
+    height: calc(100vh - 48px);
+    overflow-y: scroll;
+  }
+`;
 
 export { Context, App };

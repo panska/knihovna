@@ -13,10 +13,10 @@ import {
 } from '@fluentui/react';
 import { io } from 'socket.io-client';
 import { useMsal, useAccount, useIsAuthenticated } from '@azure/msal-react';
-
 import axios from 'axios';
+import styled from 'styled-components';
 
-const VirtualniKinosal = () => {
+const VirtualniKinosal = styled(({ className }) => {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
   const isAuthenticated = useIsAuthenticated();
@@ -353,237 +353,233 @@ const VirtualniKinosal = () => {
   if (lock.projecting) {
     if (account) {
       return (
-        <>
+        <div className={className}>
           <Title text='Virtuální kinosál' />
-          <div className='cinema'>
-            <div className='hall'>
-              <div className='player'>
-                <ReactPlayer
-                  id='videoplayer'
-                  url={url}
-                  controls={true}
-                  ref={player}
-                  onReady={() => {
-                    if (document.getElementsByClassName('vp-sidedock')) {
-                      document
-                        .getElementsByClassName('vp-sidedock')[0]
-                        .remove();
-                    }
-                  }}
-                  height={
-                    state.permissions &&
-                    state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
-                      ? 326
-                      : undefined
+          <div className='hall'>
+            <div className='player'>
+              <ReactPlayer
+                id='videoplayer'
+                url={url}
+                controls={true}
+                ref={player}
+                onReady={() => {
+                  if (document.getElementsByClassName('vp-sidedock')) {
+                    document.getElementsByClassName('vp-sidedock')[0].remove();
                   }
-                  onPlay={() => {
-                    if (
-                      state.permissions &&
-                      !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
-                    ) {
-                      if (!player.current.getInternalPlayer()) {
-                        return;
-                      }
-
-                      if (!playing) {
-                        player.current.getInternalPlayer().pause();
-                      }
+                }}
+                height={
+                  state.permissions &&
+                  state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+                    ? 326
+                    : undefined
+                }
+                onPlay={() => {
+                  if (
+                    state.permissions &&
+                    !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+                  ) {
+                    if (!player.current.getInternalPlayer()) {
                       return;
                     }
-                    sendControlsUpdate(true);
-                  }}
-                  onPause={() => {
-                    if (
-                      state.permissions &&
-                      !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
-                    ) {
-                      if (!player.current.getInternalPlayer()) {
-                        return;
-                      }
 
-                      if (playing) {
-                        player.current.getInternalPlayer().play();
-                      }
+                    if (!playing) {
+                      player.current.getInternalPlayer().pause();
+                    }
+                    return;
+                  }
+                  sendControlsUpdate(true);
+                }}
+                onPause={() => {
+                  if (
+                    state.permissions &&
+                    !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+                  ) {
+                    if (!player.current.getInternalPlayer()) {
                       return;
                     }
-                    sendControlsUpdate(false);
-                  }}
-                  onSeek={(seconds) => {
-                    if (
-                      state.permissions &&
-                      !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
-                    ) {
-                      if (seconds !== seeked) {
-                        player.current.seekTo(seeked, 'seconds');
-                      }
+
+                    if (playing) {
+                      player.current.getInternalPlayer().play();
                     }
+                    return;
+                  }
+                  sendControlsUpdate(false);
+                }}
+                onSeek={(seconds) => {
+                  if (
+                    state.permissions &&
+                    !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+                  ) {
+                    if (seconds !== seeked) {
+                      player.current.seekTo(seeked, 'seconds');
+                    }
+                  }
+                }}
+                config={{
+                  vimeo: {
+                    playerOptions: { texttrack: 'cs' },
+                  },
+                }}
+              />
+              <div className='controls'>
+                <IconButton
+                  className='play'
+                  onClick={() => {
+                    sendControlsUpdate(!playing);
                   }}
-                  config={{
-                    vimeo: {
-                      playerOptions: { texttrack: 'cs' },
-                    },
-                  }}
+                  iconProps={
+                    playing ? { iconName: 'Pause' } : { iconName: 'Play' }
+                  }
+                  disabled={
+                    state.permissions &&
+                    !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+                  }
                 />
-                <div className='controls'>
-                  <IconButton
-                    className='play'
-                    onClick={() => {
-                      sendControlsUpdate(!playing);
-                    }}
-                    iconProps={
-                      playing ? { iconName: 'Pause' } : { iconName: 'Play' }
-                    }
-                    disabled={
-                      state.permissions &&
-                      !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
-                    }
-                  />
-                  <Slider
-                    className='slider'
-                    max={100}
-                    valueFormat={sliderValueFormat}
-                    value={location}
-                    onChange={onChangeValue}
-                    showValue
-                    disabled={
-                      state.permissions &&
-                      !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
-                    }
-                  />
-                  <IconButton
-                    className='fullscreen'
-                    onClick={toggleFullScreen}
-                    iconProps={{ iconName: 'FullScreen' }}
-                  />
-                </div>
-                {state.permissions &&
-                  state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU') && (
-                    <div className='manage'>
-                      <TextField
-                        className='input'
-                        value={urlValue}
-                        onChange={(e, url) => setUrlValue(url || '')}
-                        disabled={
-                          state.permissions &&
-                          !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
-                        }
-                      />
-                      <IconButton
-                        onClick={() => {
-                          setUrl(urlValue);
-                          setPlaying(false);
-                          setLocation(0);
-                          setSeeked(0);
-                        }}
-                        iconProps={{ iconName: 'Forward' }}
-                        disabled={
-                          state.permissions &&
-                          !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
-                        }
-                      />
-                    </div>
-                  )}
+                <Slider
+                  className='slider'
+                  max={100}
+                  valueFormat={sliderValueFormat}
+                  value={location}
+                  onChange={onChangeValue}
+                  showValue
+                  disabled={
+                    state.permissions &&
+                    !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+                  }
+                />
+                <IconButton
+                  className='fullscreen'
+                  onClick={toggleFullScreen}
+                  iconProps={{ iconName: 'FullScreen' }}
+                />
               </div>
-              <div className='chat'>
-                <div className='playing'>
-                  <div>
-                    <img src={lock.projecting.moviePoster} className='poster' />
+              {state.permissions &&
+                state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU') && (
+                  <div className='manage'>
+                    <TextField
+                      className='input'
+                      value={urlValue}
+                      onChange={(e, url) => setUrlValue(url || '')}
+                      disabled={
+                        state.permissions &&
+                        !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+                      }
+                    />
+                    <IconButton
+                      onClick={() => {
+                        setUrl(urlValue);
+                        setPlaying(false);
+                        setLocation(0);
+                        setSeeked(0);
+                      }}
+                      iconProps={{ iconName: 'Forward' }}
+                      disabled={
+                        state.permissions &&
+                        !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+                      }
+                    />
                   </div>
-                  <div className='info'>
-                    <p className='about'>Právě promítáme</p>
-                    <h1 className='title'>{lock.projecting.movieName}</h1>
-                    <p className='description'>{lock.projecting.movieData}</p>
-                  </div>
+                )}
+            </div>
+            <div className='chat'>
+              <div className='playing'>
+                <div>
+                  <img src={lock.projecting.moviePoster} className='poster' />
                 </div>
-                <div className='area'>
-                  <ul id='messages'>
-                    {messages.map((message, i) => {
-                      if (message.type == 'announcement') {
-                        return (
-                          <li key={i}>
-                            <div class='announcement'>
-                              <p>{message.text}</p>
-                            </div>
-                          </li>
-                        );
-                      } else {
-                        return (
-                          <li key={i}>
-                            <div class='message'>
-                              <Persona
-                                className='profilePicture'
-                                imageUrl={message.user.profilePicture}
-                                size={PersonaSize.size32}
-                                imageAlt='Persona'
-                              />
-                              <div className='messageBody'>
-                                <div className='messageHeading'>
-                                  <h1>{message.user.username}</h1>
-                                  <p className='date'>
-                                    {`${new Date(
-                                      message.date
-                                    ).getHours()}:${new Date(
-                                      message.date
-                                    ).getMinutes()}`}
-                                  </p>
-                                </div>
-                                <p className='messageText'>{message.text}</p>
+                <div className='info'>
+                  <p className='about'>Právě promítáme</p>
+                  <h1 className='title'>{lock.projecting.movieName}</h1>
+                  <p className='description'>{lock.projecting.movieData}</p>
+                </div>
+              </div>
+              <div className='area'>
+                <ul id='messages'>
+                  {messages.map((message, i) => {
+                    if (message.type == 'announcement') {
+                      return (
+                        <li key={i}>
+                          <div class='announcement'>
+                            <p>{message.text}</p>
+                          </div>
+                        </li>
+                      );
+                    } else {
+                      return (
+                        <li key={i}>
+                          <div class='message'>
+                            <Persona
+                              className='profilePicture'
+                              imageUrl={message.user.profilePicture}
+                              size={PersonaSize.size32}
+                              imageAlt='Persona'
+                            />
+                            <div className='messageBody'>
+                              <div className='messageHeading'>
+                                <h1>{message.user.username}</h1>
+                                <p className='date'>
+                                  {`${new Date(
+                                    message.date
+                                  ).getHours()}:${new Date(
+                                    message.date
+                                  ).getMinutes()}`}
+                                </p>
                               </div>
+                              <p className='messageText'>{message.text}</p>
                             </div>
-                          </li>
-                        );
-                      }
-                    })}
-                    <div ref={messagesEndRef}></div>
-                  </ul>
-                </div>
-                <div className='messageInput'>
-                  <TextField
-                    className='input'
-                    placeholder='Nová zprava'
-                    value={textMessage}
-                    onChange={(e, text) => setTextMessage(text || '')}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        sendTextMessage(textMessage);
-                        setTextMessage('');
-                      }
-                    }}
-                    disabled={!state.username}
-                  />
-                  <IconButton
-                    onClick={() => {
+                          </div>
+                        </li>
+                      );
+                    }
+                  })}
+                  <div ref={messagesEndRef}></div>
+                </ul>
+              </div>
+              <div className='messageInput'>
+                <TextField
+                  className='input'
+                  placeholder='Nová zprava'
+                  value={textMessage}
+                  onChange={(e, text) => setTextMessage(text || '')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
                       sendTextMessage(textMessage);
                       setTextMessage('');
-                    }}
-                    iconProps={{ iconName: 'Forward' }}
-                    disabled={
-                      state.permissions &&
-                      !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
                     }
-                  />
-                </div>
+                  }}
+                  disabled={!state.username}
+                />
+                <IconButton
+                  onClick={() => {
+                    sendTextMessage(textMessage);
+                    setTextMessage('');
+                  }}
+                  iconProps={{ iconName: 'Forward' }}
+                  disabled={
+                    state.permissions &&
+                    !state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
+                  }
+                />
               </div>
             </div>
-            <div className='watching'>
-              <p className='about'>
-                Diváci{' '}
-                <span style={{ verticalAlign: 'top', fontSize: '10px' }}>
-                  {watching.length}
-                </span>
-              </p>
-              <Facepile
-                maxDisplayablePersonas={99}
-                overflowButtonType={{
-                  key: OverflowButtonType.descriptive,
-                  text: OverflowButtonType[OverflowButtonType.descriptive],
-                }}
-                personaSize={PersonaSize.size32}
-                personas={watching}
-              />
-            </div>
           </div>
-        </>
+          <div className='watching'>
+            <p className='about'>
+              Diváci{' '}
+              <span style={{ verticalAlign: 'top', fontSize: '10px' }}>
+                {watching.length}
+              </span>
+            </p>
+            <Facepile
+              maxDisplayablePersonas={99}
+              overflowButtonType={{
+                key: OverflowButtonType.descriptive,
+                text: OverflowButtonType[OverflowButtonType.descriptive],
+              }}
+              personaSize={PersonaSize.size32}
+              personas={watching}
+            />
+          </div>
+        </div>
       );
     } else {
       return (
@@ -597,13 +593,13 @@ const VirtualniKinosal = () => {
     }
   } else {
     return (
-      <>
+      <div>
         <Title text='Virtuální kinosál' />
         <div className='heading'>
           <h1>Ve virtuálním kinosále se právě nepromíta</h1>
         </div>
         {lock && lock.closestProjection && (
-          <div className='cinema' style={{ marginTop: 0 }}>
+          <div style={{ marginTop: 0 }}>
             <div className='playing' style={{ maxWidth: '360px' }}>
               <div>
                 <img
@@ -625,9 +621,148 @@ const VirtualniKinosal = () => {
             </div>
           </div>
         )}
-      </>
+      </div>
     );
   }
-};
+})`
+  margin-top: 2em;
+  margin-left: 2em !important;
+  height: 360px;
+  #videoplayer {
+    background-color: black;
+  }
+  .player {
+    width: 640px;
+  }
+  .player .controls {
+    width: 640px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    border: 1px solid rgb(237, 235, 233);
+  }
+  .player .slider {
+    margin: 0 1em 0 1em;
+  }
+  .hall {
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+  .chat {
+    margin: 0 1em 0 1em;
+    height: 394px;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+  }
+  .chat .area {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    background-color: rgb(237, 235, 233, 0.25);
+  }
+  .chat #messages {
+    list-style-type: none;
+    padding-bottom: 1em;
+  }
+  .chat .message {
+    display: flex;
+    flex-direction: row;
+    -ms-flex-direction: row;
+    padding: 1em 1em 0 1em;
+    border-radius: 3px;
+  }
+  .chat .message .profilePicture {
+    margin-right: 0.5em;
+  }
+  .chat .message .messageBody h1 {
+    color: rgb(0, 120, 212);
+    font-size: 12px;
+  }
+  .chat .message .messageText {
+    margin-top: 0.25em;
+    font-size: 14px;
+    word-wrap: break-all;
+  }
+  .chat .message .messageBody {
+    width: 100%;
+    padding: 0.75em 1em 1em 1em;
+    background-color: white;
+  }
+  .chat .message .messageHeading {
+    display: flex;
+    justify-content: space-between;
+  }
+  .chat .message .date {
+    font-size: 12px;
+    opacity: 0.75;
+  }
+  .chat .ms-TextField-fieldGroup {
+    border: 0 !important;
+  }
+  .chat .messageInput {
+    border: 1px solid rgb(237, 235, 233);
+    height: 34px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+  .manage {
+    width: 640px;
+    border: 1px solid rgb(237, 235, 233);
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+  .manage .ms-TextField-fieldGroup {
+    border: 0;
+  }
+  .playing {
+    border: 1px solid rgb(237, 235, 233);
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+  .playing .poster {
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
+  }
+  .playing .info {
+    padding: 1em;
+  }
+  .playing .about,
+  .watching .about {
+    text-transform: uppercase;
+    font-weight: 800;
+    opacity: 0.5;
+    font-size: 12px;
+  }
+  .playing .title {
+    font-size: 24px;
+  }
+  .playing .description {
+    font-size: 12px;
+  }
+  .playing .start {
+    padding-top: 0.5em;
+    opacity: 0.75;
+    font-size: 12px;
+  }
+  .watching {
+    margin: 1em 1em 1em 0;
+    border: 1px solid rgb(237, 235, 233);
+    padding: 0.5em;
+  }
+  .watching .ms-Facepile {
+    margin-top: 0.5em;
+  }
+  .watching ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .chat .announcement {
+    text-align: center;
+    font-size: 11px;
+    color: grey;
+    padding: 0.5em;
+  }
+`;
 
 export default VirtualniKinosal;

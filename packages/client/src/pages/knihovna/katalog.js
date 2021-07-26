@@ -16,10 +16,11 @@ import {
 } from '@fluentui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 import Title from '../../components/Title';
 
-const Katalog = () => {
+const Katalog = styled(({ className }) => {
   const [items, setItems] = useState([]);
   const [itemsCopy, setItemsCopy] = useState(items);
   const [graduationReading, setGraduationReading] = useState(false);
@@ -200,7 +201,7 @@ const Katalog = () => {
   });
 
   return (
-    <div className='catalog'>
+    <div className={className}>
       <Title text='Katalog knihovny' />
       <MessageBar messageBarType={MessageBarType.warning} isMultiline={false}>
         Knihovna je v této době v omezeném provozu.
@@ -237,6 +238,22 @@ const Katalog = () => {
       </div>
     </div>
   );
-};
+})`
+  .ms-FocusZone > div {
+    max-height: calc(
+      100vh - 29px - 32px - 4em - 35.2px - 48px - 5em
+    ) !important;
+  }
+  .list {
+    width: 100%;
+  }
+  .search {
+    margin-bottom: 0.5em;
+    width: 480px;
+  }
+  .container {
+    margin-left: 2em;
+  }
+`;
 
 export default Katalog;

@@ -16,10 +16,11 @@ import {
 } from '@fluentui/react';
 import axios from 'axios';
 import { loginRequest } from '../config/config';
+import styled from 'styled-components';
 
 import { getProfilePicture } from '../utils/getProfilePicture';
 
-const Navbar = () => {
+const Navbar = styled(({ className }) => {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
   const isAuthenticated = useIsAuthenticated();
@@ -114,7 +115,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className='navbar'>
+    <div className={className}>
       <div className='container'>
         <div className='navbar-logo'>
           <a href='http://panska.cz'>
@@ -173,6 +174,45 @@ const Navbar = () => {
       </div>
     </div>
   );
-};
+})`
+  height: 48px;
+  background-color: black;
+  .container {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    height: 48px;
+  }
+  .navbar-heading h1 {
+    font-family: Segoe UI Semibold;
+    font-size: 16px !important;
+    font-weight: 600;
+    color: white;
+    display: inline-block;
+    margin: 12px 0 0 0.75em;
+  }
+  .navbar-logo img {
+    height: 24px;
+    margin: 12px 0 0 0.75em;
+  }
+  ul {
+    display: flex;
+    justify-self: flex-end;
+    justify-content: center;
+    align-items: center;
+  }
+  .menu {
+    padding: 0 0.5em 0 0.5em;
+  }
+  .menu:hover {
+    cursor: pointer;
+    background-color: #0078d4;
+    -webkit-transition: background-color 250ms linear;
+    -ms-transition: background-color 250ms linear;
+    transition: background-color 250ms linear;
+  }
+  .menu .active {
+    background-color: white;
+  }
+`;
 
 export default Navbar;
