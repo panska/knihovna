@@ -4,6 +4,7 @@ import { PublicClientApplication } from '@azure/msal-browser';
 import { msalConfig } from '../config/config';
 import { initializeIcons } from '@uifabric/icons';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import Navbar from './Navbar';
 import Navigation from './Navigation';
 
