@@ -3,6 +3,7 @@ import { Breadcrumb } from '@fluentui/react';
 import { withRouter, useLocation } from 'react-router-dom';
 import ShowMoreText from 'react-show-more-text';
 import Title from '../../components/Title';
+import { Helmet } from 'react-helmet';
 import { resolveDefaultCover } from '../../utils/resolveDefaultCover';
 
 const Kniha = withRouter(({ history }) => {
@@ -32,6 +33,26 @@ const Kniha = withRouter(({ history }) => {
   return (
     <>
       <Title text={name} />
+      <Helmet
+        meta={[
+          {
+            property: 'og:title',
+            content: name,
+          },
+          {
+            property: 'og:description',
+            content: annotation ? annotation : resume && resume,
+          },
+          {
+            property: 'og:type',
+            content: 'book',
+          },
+          {
+            property: 'og:image',
+            content: coverUrl ? coverUrl : resolveDefaultCover(),
+          },
+        ]}
+      />
       <Breadcrumb
         className='breadcrumb'
         items={[
