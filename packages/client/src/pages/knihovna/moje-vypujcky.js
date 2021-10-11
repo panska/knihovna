@@ -8,8 +8,6 @@ import {
   mergeStyleSets,
   getFocusStyle,
   getTheme,
-  MessageBar,
-  MessageBarType,
   Link,
 } from '@fluentui/react';
 import {
@@ -197,9 +195,6 @@ const MojeVypujcky = styled(({ className }) => {
     <div className={className}>
       <Title text='Moje výpůjčky' />
       <AuthenticatedTemplate>
-        <MessageBar messageBarType={MessageBarType.warning} isMultiline={false}>
-          Knihovna je v této době v omezeném provozu.
-        </MessageBar>
         <div className='heading'>
           <h1>Právě půjčeno</h1>
           {items.current.length <= 0 && <p>Nemáte žádné aktivní výpůjčky.</p>}

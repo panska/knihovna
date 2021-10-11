@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  MessageBar,
-  MessageBarType,
   Link,
   Image,
   ImageFit,
@@ -203,9 +201,6 @@ const Katalog = styled(({ className }) => {
   return (
     <div className={className}>
       <Title text='Katalog knihovny' />
-      <MessageBar messageBarType={MessageBarType.warning} isMultiline={false}>
-        Knihovna je v této době v omezeném provozu.
-      </MessageBar>
 
       <div className='heading'>
         <h1>Katalog knihovny</h1>
@@ -240,9 +235,7 @@ const Katalog = styled(({ className }) => {
   );
 })`
   .ms-FocusZone > div {
-    max-height: calc(
-      100vh - 29px - 32px - 4em - 35.2px - 48px - 5em
-    ) !important;
+    max-height: calc(100vh - 29px - 32px - 4em - 48px - 5em) !important;
   }
   .list {
     width: 100%;
