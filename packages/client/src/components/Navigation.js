@@ -16,12 +16,6 @@ const Navigation = styled(
     const account = useAccount(accounts[0] || {});
     const [state, dispatch] = useContext(Context);
     const location = useLocation();
-    const [expanded, setExpanded] = useState([
-      {
-        name: 'Knihovna',
-        expanded: true,
-      },
-    ]);
 
     const getSelectedKey = (location) => {
       let links = [
@@ -63,18 +57,10 @@ const Navigation = styled(
             url: '/',
           },
           {
-            name: 'Knihovna',
-            links: [
-              {
-                name: 'Katalog',
-                key: 'key2',
-                icon: 'SearchBookmark',
-                url: '/knihovna/katalog',
-              },
-            ],
-            isExpanded: expanded.filter((obj) => {
-              return obj.name === 'Knihovna';
-            })[0].expanded,
+            name: 'Katalog',
+            key: 'key2',
+            icon: 'SearchBookmark',
+            url: '/knihovna/katalog',
           },
         ],
       },
@@ -91,7 +77,7 @@ const Navigation = styled(
           });
         }
 
-        defaultGroups[0].links[1].links.push({
+        defaultGroups[0].links.push({
           name: 'Moje výpůjčky',
           key: 'key3',
           icon: 'DoubleBookmark',
@@ -102,7 +88,7 @@ const Navigation = styled(
           state.permissions &&
           state.permissions.includes('SPRAVCE_KNIHOVNY')
         ) {
-          defaultGroups[0].links[1].links.push({
+          defaultGroups[0].links.push({
             name: 'Správa',
             key: 'key6',
             icon: 'DataManagementSettings',
@@ -118,21 +104,11 @@ const Navigation = styled(
       history.push(element.url);
     };
 
-    const _onLinkExpandClick = (event, element) => {
-      let expandedGroup = expanded.filter((obj) => {
-        return obj.name === element.name;
-      })[0];
-
-      expandedGroup.expanded = !expandedGroup.expanded;
-      setExpanded([...expanded, expandedGroup]);
-    };
-
     return (
       <div className={className}>
         <UnauthenticatedTemplate>
           <Nav
             groups={defaultGroups}
-            onLinkExpandClick={_onLinkExpandClick}
             selectedKey={getSelectedKey(location)}
             onLinkClick={_onLinkClick}
           />
@@ -140,7 +116,6 @@ const Navigation = styled(
         <AuthenticatedTemplate>
           <Nav
             groups={defaultGroups}
-            onLinkExpandClick={_onLinkExpandClick}
             selectedKey={getSelectedKey(location)}
             onLinkClick={_onLinkClick}
           />
@@ -154,7 +129,10 @@ const Navigation = styled(
     color: #0078d4 !important;
   }
   div[name='Úvod'] a,
-  div[name='Administrace'] a {
+  div[name='Administrace'] a,
+  div[name='Katalog'] a,
+  div[name='Moje výpůjčky'] a,
+  div[name='Správa'] a {
     padding: 0 0 0 0.5em;
   }
 `;

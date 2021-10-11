@@ -19,7 +19,7 @@ const Index = styled(
 
     return (
       <div className={className}>
-        <Title text='Studentský portál' />
+        <Title text='Školní knihovna' />
         {newBooks && (
           <>
             <div className='heading'>

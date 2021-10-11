@@ -127,7 +127,7 @@ const Navbar = styled(({ className }) => {
           </a>
         </div>
         <div className='navbar-heading'>
-          <h1>Studentský portál</h1>
+          <h1>Školní knihovna</h1>
         </div>
         <ul className='menu'>
           <AuthenticatedTemplate>
