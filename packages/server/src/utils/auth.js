@@ -71,18 +71,6 @@ const checkPermissions = async (idToken, permission) => {
   }
 };
 
-const isCinemaManager = asyncHandler(async (req, res, next) => {
-  if (
-    await checkPermissions(req.headers.authorization, 'SPRAVCE_FILMOVEHO_KLUBU')
-  ) {
-    return next();
-  } else {
-    let err = new Error('Unauthorized');
-    err.status = 401;
-    return next(err);
-  }
-});
-
 const isLibraryManager = asyncHandler(async (req, res, next) => {
   if (await checkPermissions(req.headers.authorization, 'SPRAVCE_KNIHOVNY')) {
     return next();
@@ -106,7 +94,6 @@ const isAdmin = asyncHandler(async (req, res, next) => {
 module.exports = {
   loginUser: loginUser,
   checkPermissions: checkPermissions,
-  isCinemaManager: isCinemaManager,
   isLibraryManager: isLibraryManager,
   isAdmin: isAdmin,
 };

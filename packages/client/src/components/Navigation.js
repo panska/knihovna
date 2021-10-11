@@ -21,10 +21,6 @@ const Navigation = styled(
         name: 'Knihovna',
         expanded: true,
       },
-      {
-        name: 'Filmový klub',
-        expanded: true,
-      },
     ]);
 
     const getSelectedKey = (location) => {
@@ -48,14 +44,6 @@ const Navigation = styled(
         {
           key: 'key5',
           pathName: '/administrace',
-        },
-        {
-          key: 'key7',
-          pathName: '/filmovy-klub/virtualni-kinosal',
-        },
-        {
-          key: 'key8',
-          pathName: '/filmovy-klub/sprava',
         },
       ];
 
@@ -86,20 +74,6 @@ const Navigation = styled(
             ],
             isExpanded: expanded.filter((obj) => {
               return obj.name === 'Knihovna';
-            })[0].expanded,
-          },
-          {
-            name: 'Filmový klub',
-            links: [
-              {
-                name: 'Virtuální kinosál',
-                key: 'key7',
-                icon: 'MyMoviesTV',
-                url: '/filmovy-klub/virtualni-kinosal',
-              },
-            ],
-            isExpanded: expanded.filter((obj) => {
-              return obj.name === 'Filmový klub';
             })[0].expanded,
           },
         ],
@@ -133,18 +107,6 @@ const Navigation = styled(
             key: 'key6',
             icon: 'DataManagementSettings',
             url: '/knihovna/sprava',
-          });
-        }
-
-        if (
-          state.permissions &&
-          state.permissions.includes('SPRAVCE_FILMOVEHO_KLUBU')
-        ) {
-          defaultGroups[0].links[2].links.push({
-            name: 'Správa',
-            key: 'key8',
-            icon: 'DataManagementSettings',
-            url: '/filmovy-klub/sprava',
           });
         }
       }

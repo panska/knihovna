@@ -11,7 +11,6 @@ import Navbar from './Navbar';
 import Navigation from './Navigation';
 
 import knihovna from '../pages/knihovna';
-import filmovyKlub from '../pages/filmovy-klub';
 import Index from '../pages';
 import Admin from '../pages/admin';
 import _404 from '../pages/404';
@@ -181,24 +180,6 @@ const App = styled(({ className }) => {
                 </Route>
                 <Route path='/knihovna/sprava'>
                   <knihovna.Sprava />
-                </Route>
-                <Route path='/filmovy-klub/virtualni-kinosal'>
-                  <filmovyKlub.VirtualniKinosal />
-                </Route>
-                <Route path='/filmovy-klub/sprava/naplanovat-projekci'>
-                  <filmovyKlub.sprava.NaplanovatProjekci />
-                </Route>
-                <Route path='/filmovy-klub/sprava/upravit-naplanovanou-projekci'>
-                  <filmovyKlub.sprava.UpravitNaplanovanouProjekci />
-                </Route>
-                <Route path='/filmovy-klub/sprava/zrusit-naplanovanou-projekci'>
-                  <filmovyKlub.sprava.ZrusitNaplanovanouProjekci />
-                </Route>
-                <Route path='/filmovy-klub/sprava/projekce'>
-                  <filmovyKlub.sprava.Projekce />
-                </Route>
-                <Route path='/filmovy-klub/sprava'>
-                  <filmovyKlub.Sprava />
                 </Route>
                 <Route path='/administrace'>
                   <Admin />
