@@ -255,10 +255,10 @@ router.post(
             });
 
             await transporter.sendMail({
-              from: 'Studentský portál​ <20GKovacevicM@student.panska.cz>',
+              from: 'Knihovna <knihovna@panska.cz>',
               to: borrowerEmail,
               subject: `Výpůjčka č. ${bookLoan.id}`,
-              text: `Tento email slouží jako potvrzení o úspěšné výpůjčce z školní knihovny. Přehled svých výpůjček můžete po přihlášení najít i na portal.panska.cz.\n\n${
+              text: `Tento email slouží jako potvrzení o úspěšné výpůjčce z školní knihovny. Přehled svých výpůjček můžete po přihlášení najít i na https://knihovna.panska.cz\n\n${
                 (await Book.findOne({ where: { id: bookLoan.book } })).name
               }, půjčené do ${bookLoan.returnDate.toLocaleDateString(
                 'cs-CZ'

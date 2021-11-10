@@ -52,7 +52,7 @@ const reminders = schedule.scheduleJob('0 8 * * *', async () => {
       bookLoans.findIndex((i) => i.User.email == bookLoan.User.email) == index
   )) {
     await transporter.sendMail({
-      from: 'Studentský portál​ <20GKovacevicM@student.panska.cz>',
+      from: 'Knihovna <knihovna@panska.cz>',
       to: user.User.email,
       subject: 'Upozornění na konec výpůjční lhůty',
       text: `Vážený/á studente/tko,\nblíží se konec výpůjční lhůty u následujících titulů:\n\n${bookLoans
