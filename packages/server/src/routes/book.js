@@ -222,11 +222,16 @@ router.post(
     const { borrowerEmail, bookId } = req.body;
 
     if (borrowerEmail && bookId) {
-      const borrower = await User.findOne({
-        where: {
-          email: borrowerEmail,
-        },
-      });
+      const borrower = (
+        await User.findOrCreate({
+          where: {
+            email: {
+              [Op.iLike]: `%${borrowerEmail}%`,
+            },
+          },
+          defaults: { email: borrowerEmail },
+        })
+      )[0];
 
       if (borrower) {
         const book = await Book.findOne({

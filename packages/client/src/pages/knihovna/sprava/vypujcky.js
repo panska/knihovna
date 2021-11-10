@@ -157,7 +157,12 @@ const Vypujcky = styled(
             </Link>
           );
         case 'reader':
-          return <span>{item.User.displayName}</span>;
+          if (item.User.displayName) {
+            return <span>{item.User.displayName}</span>;
+          } else if (item.User.email) {
+            return <span>{item.User.email}</span>;
+          }
+
         case 'returned':
           return <span>{item.returned ? 'ANO' : 'NE'}</span>;
         default:

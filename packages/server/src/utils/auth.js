@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const { User } = require('./../models/');
 const { default: createRemoteJWKSet } = require('jose/jwks/remote');
 const { default: jwtVerify } = require('jose/jwt/verify');
+const { Op } = require('sequelize');
 
 const verifyToken = async (token) => {
   const JWKS = createRemoteJWKSet(
@@ -22,19 +23,28 @@ const loginUser = async (idToken) => {
     idToken
   );
 
-  let user = (
-    await User.findOrCreate({
-      where: {
-        oid,
+  [user, created] = await User.findOrCreate({
+    where: {
+      email: {
+        [Op.iLike]: `%${email}%`,
       },
-      defaults: {
-        email,
-        familyName: family_name,
-        givenName: given_name,
-        displayName: name,
-      },
-    })
-  )[0];
+    },
+    defaults: {
+      oid,
+      email,
+      familyName: family_name,
+      givenName: given_name,
+      displayName: name,
+    },
+  });
+
+  if (!user.oid) {
+    user.oid = oid;
+    user.familyName = family_name;
+    user.givenName = given_name;
+    user.displayName = name;
+    await user.save();
+  }
 
   if (user.permissions) {
     return user.permissions;
