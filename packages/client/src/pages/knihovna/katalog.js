@@ -140,9 +140,12 @@ const Katalog = styled(({ className }) => {
           >
             {item.name}
           </Link>
-          <div
-            className={classNames.itemIndex}
-          >{`${item.authorGivenName}, ${item.authorFamilyName}`}</div>
+          <div className={classNames.itemIndex}>
+            {item.authorGivenName &&
+              `${item.authorGivenName}, ${
+                item.authorFamilyName && item.authorFamilyName
+              }`}
+          </div>
         </div>
       </div>
     );
@@ -205,8 +208,8 @@ const Katalog = styled(({ className }) => {
       <div className='heading'>
         <h1>Katalog knihovny</h1>
         <p>
-          Elektronický katalog knih je přehledná datábaze všech knih, které
-          školní knihovna vlastní.
+          Inspirujte se a procházejte fond školní knihovny nebo vyhledejte
+          konkrétní položku
         </p>
       </div>
 
