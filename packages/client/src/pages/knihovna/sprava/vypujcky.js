@@ -8,6 +8,8 @@ import {
   Breadcrumb,
 } from '@fluentui/react';
 import { withRouter } from 'react-router-dom';
+import { useMsal, useAccount } from '@azure/msal-react';
+import { loginRequest } from '../../../config/config';
 import axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
@@ -15,6 +17,9 @@ import Title from '../../../components/Title';
 
 const Vypujcky = styled(
   withRouter(({ className, history }) => {
+    const { instance, accounts } = useMsal();
+    const account = useAccount(accounts[0] || {});
+    const [refresh, setRefresh] = useState(false);
     const [state, dispatch] = useContext(Context);
     const [items, setItems] = useState({
       sortedItems: [],
@@ -80,7 +85,7 @@ const Vypujcky = styled(
         });
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [refresh]);
 
     const onColumnClick = (event, column) => {
       const { columns } = items;
@@ -109,7 +114,7 @@ const Vypujcky = styled(
       });
     };
 
-    function renderItemColumn(item, index, column) {
+    const renderItemColumn = (item, index, column) => {
       const fieldContent = item[column.fieldName];
       let currentDate = new Date();
       currentDate.setHours(0, 0, 0, 0);
@@ -162,13 +167,22 @@ const Vypujcky = styled(
           } else if (item.User.email) {
             return <span>{item.User.email}</span>;
           }
-
         case 'returned':
-          return <span>{item.returned ? 'ANO' : 'NE'}</span>;
+          return (
+            <span>
+              {item.returned ? (
+                'ANO'
+              ) : (
+                <Link onClick={() => returnBook(item.User.email, item.Book.id)}>
+                  NE
+                </Link>
+              )}
+            </span>
+          );
         default:
           return <span>{fieldContent}</span>;
       }
-    }
+    };
 
     const copyAndSort = (items, key, isSortedDescending) => {
       return items
@@ -209,6 +223,34 @@ const Vypujcky = styled(
         columns: itemsCopy.columns,
         sortedItems: [...new Set([...byBookName, ...byReader])],
       });
+    };
+
+    const returnBook = (borrowerEmail, bookId) => {
+      if (account) {
+        instance
+          .acquireTokenSilent({
+            ...loginRequest,
+            account: account,
+          })
+          .then(async (res) => {
+            await axios
+              .post(
+                '/api/book/return',
+                {
+                  borrowerEmail,
+                  bookId,
+                },
+                {
+                  headers: {
+                    Authorization: res.idToken,
+                  },
+                }
+              )
+              .then((res) => {
+                setRefresh(!refresh);
+              });
+          });
+      }
     };
 
     if (state.permissions && state.permissions.includes('SPRAVCE_KNIHOVNY')) {
