@@ -118,7 +118,8 @@ const Vypujcky = styled(
       const fieldContent = item[column.fieldName];
       let currentDate = new Date();
       currentDate.setHours(0, 0, 0, 0);
-      let lateReturn = new Date(item.returnDate) < currentDate;
+      let lateReturn =
+        new Date(item.returnDate) < currentDate && !item.returned;
 
       switch (column.fieldName) {
         case 'borrowDate':
