@@ -8,10 +8,14 @@ export async function getProfilePicture(accessToken) {
     },
   });
 
-  const profilePhoto = await client
-    .api('me/photos/48x48/$value')
-    .responseType(ResponseType.ARRAYBUFFER)
-    .get();
+  try {
+    const profilePhoto = await client
+      .api('me/photos/48x48/$value')
+      .responseType(ResponseType.ARRAYBUFFER)
+      .get();
 
-  return Buffer.from(profilePhoto).toString('base64');
+    return Buffer.from(profilePhoto).toString('base64');
+  } catch {
+    return;
+  }
 }
